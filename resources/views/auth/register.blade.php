@@ -7,8 +7,8 @@
 
 
     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-
+    <label for="surname">{{ __('Surname') }}</label>
+    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autofocus>
     <label for="email">{{ __('E-Mail Adres') }}</label>
     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
     <label for="password">{{ __('Wachtwoord') }}</label>
