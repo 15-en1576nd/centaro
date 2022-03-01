@@ -24,6 +24,15 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
     Valuta:
 {{Auth::user()->preference->valuta}}
 @endif
+
+@foreach(Auth::user()->board as $board)
+    <div style="display: flex; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">
+        <h3>Board: {{$board->id}}</h3>
+{{--        @foreach(Auth::user()->board->board_users as $boardusers)--}}
+{{--        <p>{{$boardusers}}</p>--}}
+{{--        @endforeach--}}
+    </div>
+@endforeach
 </body>
 </html>
 

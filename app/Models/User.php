@@ -47,4 +47,7 @@ class User extends Authenticatable
     public function preference() {
         return $this->hasOne(preference::class, 'user_id', 'id');
     }
+    public function board() {
+        return $this->belongsToMany(board::class, 'board_users', 'user_id');
+    }
 }

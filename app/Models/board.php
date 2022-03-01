@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class board extends Model
 {
     use HasFactory;
+    public function board_users() {
+        return $this->belongsToMany(User::class, 'board_users', 'board_id');
+    }
 }
