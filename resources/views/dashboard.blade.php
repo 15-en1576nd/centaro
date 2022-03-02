@@ -25,6 +25,11 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
 {{Auth::user()->preference->valuta}}
 @endif
 
+<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><button>Logout</button></a>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 @foreach(Auth::user()->board as $board)
     <a style="text-decoration: none" href="/board/{{$board->id}}">
     <div style="background: #2563eb; color:white; display: flex; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">

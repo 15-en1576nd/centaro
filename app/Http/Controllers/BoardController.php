@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\board;
+use App\Models\board_users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class BoardController extends Controller
 
     public function index()
     {
-        //
+        return view('board.list');
     }
 
     /**
@@ -27,7 +28,7 @@ class BoardController extends Controller
      */
     public function create()
     {
-        //
+        return view('board.create');
     }
 
     /**
@@ -38,7 +39,20 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->name;
+        $type = $request->type;
+        if (!$name || !$type) {
+            return redirect()->back();
+        }
+        $board = new board();
+        $board->name = $name;
+        $board->type = $type;
+        $board->save();
+        $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id,'board_role_id' => 99));
+         $latestboard = board::latest()->first();
+         $id = $latestboard->id;
+
+        return redirect('/board/' . $id);
     }
 
     /**
@@ -49,11 +63,10 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        $boards = board::where('id', $id)->get();
+        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
         foreach ($boards as $board) {
-            $board;
+            $board; //Split search-result in single array (This was made because many to many result).
             }
-
 
         return view('board.view', ['board' => $board]);
         }
@@ -93,17 +106,5 @@ class BoardController extends Controller
         //
     }
 
-    protected function checkuser($boards) {
-        foreach ($boards as $board) {
-            $board;
-        }
-        $userids = array();
-        foreach ($board->board_users as $user) {
-            $userids[] = $user->id;
-        }
-        if (!in_array(Auth::user()->id, $userids)) {
-            return view('index');
-            echo 'test';
-        }
-    }
+
 }

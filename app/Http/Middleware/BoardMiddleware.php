@@ -12,31 +12,38 @@ class BoardMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
+
+
+
+
     public function handle(Request $request, Closure $next)
     {
-       $id = $request->route('board');
-        $idexists = board::where('id', '=', $id)->first();
-       if (isset($id) && $idexists != null) {
-        $boards = board::where('id', $id)->get();
-        foreach ($boards as $board) {
-            $board;
-        }
-        $userids = array();
-        foreach ($board->board_users as $user) {
-            $userids[] = $user->id;
-        }
-        if (!in_array(Auth::user()->id, $userids)) {
-            abort('403');
-        } else {
+        $id = $request->route('board'); //Get board-id from url.
+        $idexists = board::where('id', '=', $id)->first(); //Search id of board in array.
+        if (isset($id) && $idexists != null) {  //Check if board exist & user has access to board.
+            $boards = board::where('id', $id)->get(); //Get board's from user.
+            foreach ($boards as $board) { //Split all boards to single arrays.
+                $board;
+            }
+            $userids = array();
+            foreach ($board->board_users as $user) { //Selects all users from board.
+                $userids[] = $user->id;
+            }
+            if (in_array(Auth::user()->id, $userids)) { //Checks if user has access to board.
+                return $next($request);
+            } else {
+                abort('403');
+            }
+
+        } elseif(!isset($id)) {
             return $next($request);
-        }
-       } else {
-           abort('404');
-       }
+        } else {
+            abort('404');
+    }
 
     }
 }

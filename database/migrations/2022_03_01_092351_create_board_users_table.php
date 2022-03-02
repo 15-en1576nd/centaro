@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('board_users', function (Blueprint $table) {
-            $table->integer('board_id');
-            $table->integer('user_id');
-            $table->integer('board_role_id');
+            $table->integer('board_id')->onDelete('cascade');
+            $table->integer('user_id')->onDelete('cascade');
+            $table->integer('board_role_id')->onDelete('cascade');
 
         });
     }
