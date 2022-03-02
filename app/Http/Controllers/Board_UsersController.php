@@ -1,25 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\BoardController;
 use App\Models\board;
 use App\Models\board_users;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class BoardController extends Controller
+class Board_UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
     public function index()
     {
-        return view('board.list');
+        //
     }
 
     /**
@@ -29,7 +28,7 @@ class BoardController extends Controller
      */
     public function create()
     {
-        return view('board.create');
+        //
     }
 
     /**
@@ -40,20 +39,16 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $type = $request->type;
-        if (!$name || !$type) {
-            return redirect()->back();
-        }
-        $board = new board();
-        $board->name = $name;
-        $board->type = $type;
-        $board->save();
-        $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id,'board_role_id' => 99));
-         $latestboard = board::latest()->first();
-         $id = $latestboard->id;
+      $email = $request->email;
+        if($email) {
+            $currentboardid = Session::get('currentboardid');
+           $id = User::where('email', $email)->first()->id;
+            $board = board::where('id', $currentboardid)->first();
 
-        return redirect('/board/' . $id);
+            $board->board_users()->attach('board_id', array('user_id' => $id,'board_role_id' => 1));
+        }
+        return redirect()->back();
+
     }
 
     /**
@@ -64,15 +59,8 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        Session::put('currentboardid', $id);
-        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
-        foreach ($boards as $board) {
-            $board; //Split search-result in single array (This was made because many to many result).
-            }
-
-        return view('board.view', ['board' => $board]);
-        }
-
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -105,11 +93,15 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        $board = board::find($id);
-        $board->board_users()->detach();
-        $board->delete();
-        return redirect('/board');
+        $currentboardid = Session::get('currentboardid');
+
+        $board = board::where('id', $currentboardid)->first();
+        $roleid = board_users::where('user_id', $id)->first()->board_role_id;
+
+
+       if (Auth::user()->id != $id && $roleid != 99) {
+           $board->board_users()->wherePivot('user_id', '=', $id)->detach();
+       }
+        return redirect()->back();
     }
-
-
 }
