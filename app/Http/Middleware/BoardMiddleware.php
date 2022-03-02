@@ -19,7 +19,8 @@ class BoardMiddleware
     public function handle(Request $request, Closure $next)
     {
        $id = $request->route('board');
-       if (isset($id)) {
+        $idexists = board::where('id', '=', $id)->first();
+       if (isset($id) && $idexists != null) {
         $boards = board::where('id', $id)->get();
         foreach ($boards as $board) {
             $board;
@@ -34,7 +35,7 @@ class BoardMiddleware
             return $next($request);
         }
        } else {
-           abort('403');
+           abort('404');
        }
 
     }
