@@ -103,7 +103,9 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $board = board::find($id);
+        $board->delete();
+        return redirect('/board');
     }
 
 

@@ -9,3 +9,10 @@ Members:
     {{$user->surname}}
 
 @endforeach
+!
+<form method="post" action="{{route('board.destroy', $board->id) }}">
+    @method('DELETE')
+    @csrf
+<input type="submit" value="Destroy">
+</form>
+
