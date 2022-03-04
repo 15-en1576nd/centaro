@@ -18,7 +18,15 @@ class Board_UsersController extends Controller
      */
     public function index()
     {
-        //
+        $id = Session::get('currentboardid');
+        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
+        foreach ($boards as $board) {
+            $board; //Split search-result in single array (This was made because many to many result).
+        }
+
+
+
+        return view('board.users.list', ['board' => $board]);
     }
 
     /**
@@ -40,12 +48,20 @@ class Board_UsersController extends Controller
     public function store(Request $request)
     {
       $email = $request->email;
-        if($email) {
-            $currentboardid = Session::get('currentboardid');
-           $id = User::where('email', $email)->first()->id;
-            $board = board::where('id', $currentboardid)->first();
+       $emailcheck = User::where('email', '=', $email)->exists();
 
+      if (!$email || $emailcheck === false) {
+          return redirect()->back(); // WITH ERROR
+      }
+        $currentboardid = Session::get('currentboardid');
+        $id = User::where('email', $email)->first()->id;
+        $board = board::where('id', $currentboardid)->first();
+        $userboard = User::where('id', $id)->first()->board->where('id', $currentboardid)->first();
+
+        if($userboard === null && $board->type == 'team') {
             $board->board_users()->attach('board_id', array('user_id' => $id,'board_role_id' => 1));
+        } elseif(!$currentboardid) {
+            return redirect('/board');
         }
         return redirect()->back();
 

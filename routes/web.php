@@ -20,7 +20,8 @@ Route::get('/', function () {
 Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->middleware(['auth'])->name('dashboard');
 
 Route::resource('board', \App\Http\Controllers\BoardController::class)->middleware(['board']);
-Route::resource('board_users', \App\Http\Controllers\Board_UsersController::class)->middleware(['board']);
+
+Route::resource('boardusers', \App\Http\Controllers\Board_UsersController::class)->middleware(['board']);
 
 
 require __DIR__.'/auth.php';

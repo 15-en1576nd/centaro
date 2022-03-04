@@ -30,13 +30,12 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
+<a href="/board/create"><button>Create</button></a> Boards:
+
 @foreach(Auth::user()->board as $board)
     <a style="text-decoration: none" href="/board/{{$board->id}}">
     <div style="background: #2563eb; color:white; display: flex; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">
         <h3>{{$board->name}}: {{$board->id}}</h3>
-{{--        @foreach(Auth::user()->board->board_users as $boardusers)--}}
-{{--        <p>{{$boardusers}}</p>--}}
-{{--        @endforeach--}}
       <p>{{$board->type}}</p>
         @foreach($board->board_users as $user)
            <p style="color: red">{{$user->name}}</p>
