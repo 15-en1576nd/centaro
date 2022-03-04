@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('board_manual_records', function (Blueprint $table) {
             $table->id();
+            $table->integer('board_id');
+            $table->integer('user_id');
+            $table->integer('category_id');
+            $table->string('name');
+            $table->string('type');
+            $table->string('value');
+            $table->string('attachment');
             $table->timestamps();
         });
     }

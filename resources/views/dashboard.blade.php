@@ -15,7 +15,7 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
         <td>First Name: {{Auth::user()->name}}</td>
         <td>Surname: {{Auth::user()->surname}}</td>
         <td>Email: {{Auth::user()->email}}</td>
-        <td>Role id: {{Auth::user()->role_id}}</td>
+
     </tr>
 </table>
 @if(isset(Auth::user()->preference))

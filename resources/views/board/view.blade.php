@@ -1,6 +1,6 @@
 <h1>{{$board->name}}</h1>
 
-<h2 style="color: #2563eb">€1.500,-</h2>
+<h2 style="color: #2563eb">€{{$total}},-</h2>
 <p>Type: {{$board->type}}</p>
 
 <br><br>
@@ -10,6 +10,9 @@ Members:
     <p>
     {{$user->name}}
         {{$user->surname}}
+
+{{--        {{$user->boardrole->id}}--}}
+
     </p>
 @endforeach
 
@@ -18,4 +21,5 @@ Members:
     @csrf
 <input type="submit" value="Destroy">
 </form>
+
 

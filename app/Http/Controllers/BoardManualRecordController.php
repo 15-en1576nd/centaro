@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\board;
 use App\Models\board_manual_record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BoardManualRecordController extends Controller
 {
@@ -14,7 +16,12 @@ class BoardManualRecordController extends Controller
      */
     public function index()
     {
-        //
+       $id = Session::get('currentboardid');
+        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
+        foreach ($boards as $board) {
+            $board; //Split search-result in single array (This was made because many to many result).
+        }
+        return view('board.records.list', ['board' => $board]);
     }
 
     /**

@@ -50,4 +50,11 @@ class User extends Authenticatable
     public function board() {
         return $this->belongsToMany(board::class, 'board_users', 'user_id');
     }
+
+    public function role() {
+        return $this->belongsTo(role::class, 'role_id', 'id');
+    }
+
+
+
 }

@@ -13,6 +13,9 @@ class board extends Model
         'type',
     ];
     public function board_users() {
-        return $this->belongsToMany(User::class, 'board_users', 'board_id');
+        return $this->belongsToMany(User::class, 'board_users', 'board_id')->withPivot('board_role_id');
+    }
+    public function manual_record() {
+        return $this->hasMany(board_manual_record::class, 'board_id', 'id');
     }
 }

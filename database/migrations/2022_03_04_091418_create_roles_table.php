@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('board_economic_categories', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->integer('board_id');
-            $table->string('name');
             $table->string('color');
-            $table->timestamps();
+            $table->string('name');
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board_economic_categories');
+        Schema::dropIfExists('roles');
     }
 };

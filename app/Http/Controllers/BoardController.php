@@ -64,13 +64,18 @@ class BoardController extends Controller
      */
     public function show($id)
     {
+        $total = 0;
         Session::put('currentboardid', $id);
-        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
-        foreach ($boards as $board) {
-            $board; //Split search-result in single array (This was made because many to many result).
-            }
+        $board = board::where('id', $id)->first(); //Select board  from url-parameter.
+        foreach ($board->manual_record as $record) {
+            $singlerecord = $record->type . $record->value;
+            $total = $total + (int)$singlerecord;
+        }
 
-        return view('board.view', ['board' => $board]);
+
+
+
+        return view('board.view', ['board' => $board, 'total' => $total]);
         }
 
 

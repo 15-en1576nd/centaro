@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class board_manual_record extends Model
+class permission extends Model
 {
     use HasFactory;
-
-    public function board() {
-        return $this->hasOne(board::class, 'id', 'board_id');
+    public function permission() {
+        return $this->belongsToMany(role::class, 'permission_role', 'permission_id');
     }
 }

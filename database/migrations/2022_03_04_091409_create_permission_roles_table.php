@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('board_economic_categories', function (Blueprint $table) {
-            $table->id();
-            $table->integer('board_id');
-            $table->string('name');
-            $table->string('color');
-            $table->timestamps();
+        Schema::create('permission_roles', function (Blueprint $table) {
+            $table->integer('role_id');
+            $table->integer('permission_id');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board_economic_categories');
+        Schema::dropIfExists('permission_roles');
     }
 };
