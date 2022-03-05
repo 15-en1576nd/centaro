@@ -66,9 +66,16 @@ class BoardController extends Controller
     {
 
         $total = 0;
+        $totalspendings = 0;
+        $totalincome = 0;
         Session::put('currentboardid', $id);
         $board = board::where('id', $id)->first(); //Select board  from url-parameter.
         foreach ($board->manual_record as $record) {
+            if ($record->type == '+') {
+                $totalincome = $totalincome + $record->value;
+            } elseif($record->type == '-') {
+                $totalspendings = $totalspendings + $record->value;
+            }
             $singlerecord = $record->type . $record->value;
             $total = $total + (int)$singlerecord;
         }
@@ -76,7 +83,7 @@ class BoardController extends Controller
 
 
 
-        return view('board.view', ['board' => $board, 'total' => $total]);
+        return view('board.view', ['board' => $board, 'total' => $total, 'totalspendings' => $totalspendings, 'totalincome' => $totalincome]);
         }
 
 
