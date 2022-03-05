@@ -64,6 +64,7 @@ class BoardController extends Controller
      */
     public function show($id)
     {
+
         $total = 0;
         Session::put('currentboardid', $id);
         $board = board::where('id', $id)->first(); //Select board  from url-parameter.
@@ -112,6 +113,7 @@ class BoardController extends Controller
     {
         $board = board::find($id);
         $board->board_users()->detach();
+        $board->manual_record()->delete();
         $board->delete();
         return redirect('/board');
     }

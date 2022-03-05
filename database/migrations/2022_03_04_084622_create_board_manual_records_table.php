@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('board_id');
             $table->integer('user_id');
             $table->integer('category_id');
-            $table->string('name');
+            $table->string('title');
+            $table->string('discription');
             $table->string('type');
             $table->string('value');
             $table->string('attachment');

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\board;
 use App\Models\board_manual_record;
 use Illuminate\Http\Request;
@@ -17,10 +17,10 @@ class BoardManualRecordController extends Controller
     public function index()
     {
        $id = Session::get('currentboardid');
-        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
-        foreach ($boards as $board) {
-            $board; //Split search-result in single array (This was made because many to many result).
-        }
+        $board = board::where('id', $id)->first(); //Select board  from url-parameter.
+
+         //Split search-result in single array (This was made because many to many result).
+
         return view('board.records.list', ['board' => $board]);
     }
 
@@ -40,9 +40,19 @@ class BoardManualRecordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($board ,Request $request)
     {
-        //
+        $type = $request->type;
+        $value = $request->value;
+        $title =  $request->title;
+        $discription = $request->discription;
+        if ($type === '-' OR $type === '+' || is_integer($value) || is_string($name)) {
+           $board = board::where('id', $board)->first();
+            board_manual_record::create(array('user_id' => Auth::user()->id,'board_id' => $board->id, 'category_id' => 1,'type' => $type,'value' => $value, 'title' => $title, 'discription' => $discription, 'attachment' => 'test.png'));
+            //FIX!!!!!!!
+        }
+
+        return redirect()->back();
     }
 
     /**
