@@ -1,12 +1,19 @@
-<a href="/board/{{Session::get('currentboardid')}}">
+<a href="/board/{{$board->id}}">
     <button>terug</button>
 </a>
+
 <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
-    <form action="/board/{{Session::get('currentboardid')}}/records" method="post">
+    <form action="/board/{{$board->id}}/records" method="post">
         @csrf
         <select name="type">
             <option value="-">-</option>
             <option value="+">+</option>
+        </select>
+        <select name="category">
+            @foreach($board->category as $category)
+                <option value="{{$category->id}}" style="background: {{$category->color}}">{{$category->name}}</option>
+            @endforeach
+            <option onclick="location.href=('/board/{{$board->id}}/category')">Create</option>
         </select>
         <input type="number" name="value" placeholder="Amount. 10">
         <input type="text" name="title" placeholder="Title">
@@ -20,10 +27,11 @@
 @foreach($board->manual_record->sortByDesc('created_at') as $record)
     <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
 
-        <div style="width: 100%">{{$record->type . '€' . $record->value}},-</div>
-        <div style="width: 100%">{{$record->title}}</div>
-        <div style="width: 100%; flex-wrap: wrap; font-weight: lighter">{{$record->discription}}</div>
-        <div style="width: 50%">{{$record->created_at->format('m/d/Y')}}</div>
+        <div style="width: 100%; font-weight: bold; color: @if($record->type == "-")indianred @elseif($record->type == "+") limegreen @endif;">{{$record->type . '€' . $record->value}},-</div>
+        <div style="width: 100%; color: {{$record->category->color}}">{{$record->category->name}}</div>
+        <div style="width: 100%; flex-wrap: wrap; font-weight: lighter">{{$record->title}}</div>
+        <div style="width: 50%">{{$record->created_at->format('d/m/Y')}}</div>
+        <div style="width: 25%">{{$record->user->name}}</div>
     </div>
 
 @endforeach

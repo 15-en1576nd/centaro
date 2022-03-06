@@ -70,6 +70,7 @@ class BoardController extends Controller
         $totalincome = 0;
         Session::put('currentboardid', $id);
         $board = board::where('id', $id)->first(); //Select board  from url-parameter.
+       
         foreach ($board->manual_record as $record) {
             if ($record->type == '+') {
                 $totalincome = $totalincome + $record->value;

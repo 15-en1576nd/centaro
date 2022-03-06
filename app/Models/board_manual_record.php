@@ -21,4 +21,10 @@ class board_manual_record extends Model
     public function board() {
         return $this->hasOne(board::class, 'id', 'board_id');
     }
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function category() {
+        return $this->hasOne(board_economic_category::class, 'id', 'category_id');
+    }
 }

@@ -5,7 +5,7 @@
 <h2 style="color: indianred">€{{$totalspendings}},-</h2>
 <h2>Maandelijkse Inkomsten:</h2>
 <h2 style="color: green">€{{$totalincome}},-</h2>
-<a href="/board/{{Session::get('currentboardid')}}/records"><button>Manage economics</button></a>
+<a href="/board/{{$board->id}}/records"><button>Manage economics</button></a>
 <p>Type: {{$board->type}}</p>
 
 <br><br>

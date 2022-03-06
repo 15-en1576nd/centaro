@@ -70,7 +70,9 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo(role::class, 'role_id', 'id');
     }
-
+    public function manual_records() {
+        return $this->belongsTo(board_manual_record::class, 'id', 'user_id');
+    }
 
 
 }

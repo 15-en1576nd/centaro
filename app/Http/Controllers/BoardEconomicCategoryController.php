@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\board;
 use App\Models\board_economic_category;
+use App\Models\board_manual_record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BoardEconomicCategoryController extends Controller
 {
@@ -12,9 +15,12 @@ class BoardEconomicCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($board)
     {
-        //
+        $board = board::find($board);
+
+
+        return view('board.category.list', ['board' => $board]);
     }
 
     /**
@@ -22,9 +28,10 @@ class BoardEconomicCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($board)
     {
-        //
+
+
     }
 
     /**
@@ -33,9 +40,16 @@ class BoardEconomicCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($board, Request $request)
     {
-        //
+        $name = $request->name;
+        $color = $request->color;
+        if ($color && $name) {
+            board_economic_category::create(array('board_id' => $board, 'name' => $name, 'color' => $color));
+
+        }
+
+        return redirect()->back();
     }
 
     /**

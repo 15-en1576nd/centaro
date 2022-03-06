@@ -47,10 +47,11 @@ class BoardManualRecordController extends Controller
         $value = $request->value;
         $title = $request->title;
         $discription = $request->discription;
+        $category_id = $request->category;
 
         if ($type == "-" || $type == "+" && $value && $title && $discription) {
             $board = board::where('id', $board)->first();
-            board_manual_record::create(array('user_id' => Auth::user()->id, 'board_id' => $board->id, 'category_id' => 1, 'type' => $type, 'value' => $value, 'title' => $title, 'discription' => $discription, 'attachment' => 'test.png'));
+            board_manual_record::create(array('user_id' => Auth::user()->id, 'board_id' => $board->id, 'category_id' => $category_id, 'type' => $type, 'value' => $value, 'title' => $title, 'discription' => $discription, 'attachment' => 'test.png'));
             //FIX!!!!!!!
         }
 

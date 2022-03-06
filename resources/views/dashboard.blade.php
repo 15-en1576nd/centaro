@@ -43,6 +43,7 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
     </div>
     </a>
 @endforeach
+<input type="color">
 </body>
 </html>
 

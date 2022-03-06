@@ -1,5 +1,5 @@
-<form action="{{ route('board.store') }}" method="post" >
-@csrf
+<form action="/board" method="post" >
+    @csrf
     <input type="text" name="name" placeholder="name">
     <select name="type">
         <option value="team">team</option>
