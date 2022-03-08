@@ -18,7 +18,7 @@ class BoardPolicy
      */
     public function viewAny(User $user)
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,8 +30,8 @@ class BoardPolicy
      */
     public function view(User $user, Board $board)
     {
-        return false;
-        return in_array($user, $board->board_users());
+        $board_user_id = $board->board_users->pluck('id')->all();
+        return in_array($user->id, $board_user_id);
 
     }
 

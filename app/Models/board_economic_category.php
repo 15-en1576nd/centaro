@@ -9,7 +9,7 @@ class board_economic_category extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'color',
+        'color_id',
         'board_id',
         'name',
     ];
@@ -17,6 +17,6 @@ class board_economic_category extends Model
         return $this->hasOne(Board::class, 'board_id', 'id');
     }
     public function color() {
-        return $this->hasOne(color::class, 'color_id', 'id');
+        return $this->hasOne(color::class, 'id', 'color_id');
     }
 }

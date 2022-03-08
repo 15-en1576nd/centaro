@@ -1,4 +1,4 @@
-<form action="/board" method="post" >
+<form method="post" >
     @csrf
     <input type="text" name="name" placeholder="name">
     <select name="type">

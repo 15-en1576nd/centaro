@@ -15,7 +15,10 @@ class BoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function __construct()
+    {
+        $this->authorizeResource(Board::class);
+    }
 
     public function index()
     {
@@ -35,7 +38,7 @@ class BoardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,8 +52,8 @@ class BoardController extends Controller
         $board->name = $name;
         $board->type = $type;
         $board->save();
-        $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id,'board_role_id' => 99));
-         $latestboard_id = Board::latest()->first()->id;
+        $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id, 'board_role_id' => 99));
+        $latestboard_id = Board::latest()->first()->id;
 
         return redirect('/board/' . $latestboard_id);
     }
@@ -58,7 +61,7 @@ class BoardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Board $board)
@@ -72,7 +75,7 @@ class BoardController extends Controller
         foreach ($board->manual_record as $record) { //This function seperates (Spend & Income types)
             if ($record->type === '+') {
                 $totalincome += $record->value;
-            } elseif($record->type === '-') {
+            } elseif ($record->type === '-') {
                 $totalspendings += $record->value;
             }
             $singlerecord = $record->type . $record->value;
@@ -80,16 +83,14 @@ class BoardController extends Controller
         }
 
 
-
-
         return view('board.view', ['board' => $board, 'total' => $total, 'totalspendings' => $totalspendings, 'totalincome' => $totalincome]);
-        }
+    }
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -100,8 +101,8 @@ class BoardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -112,7 +113,7 @@ class BoardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

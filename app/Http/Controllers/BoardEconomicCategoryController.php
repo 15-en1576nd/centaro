@@ -46,7 +46,7 @@ class BoardEconomicCategoryController extends Controller
         $name = $request->name;
         $color = $request->color;
         if ($color && $name) {
-            board_economic_category::create(array('board_id' => $board, 'name' => $name, 'color' => $color));
+            board_economic_category::create(array('board_id' => $board, 'name' => $name, 'color_id' => $color));
 
         }
 
