@@ -21,7 +21,7 @@ Members:
     </p>
 @endforeach
 
-<form method="post" action="{{route('board.destroy', $board->id) }}">
+<form method="post" action="{{route('boards.destroy', $board->id) }}">
     @method('DELETE')
     @csrf
 <input type="submit" value="Destroy">

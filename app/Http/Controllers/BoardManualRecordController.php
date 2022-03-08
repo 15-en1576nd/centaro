@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\board;
+use App\Models\Board;
 use App\Models\board_manual_record;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -15,12 +15,9 @@ class BoardManualRecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($board)
     {
-        $id = Session::get('currentboardid');
-        $board = board::where('id', $id)->first(); //Select board  from url-parameter.
-
-        //Split search-result in single array (This was made because many to many result).
+        $board = Board::findorfail($board);
 
         return view('board.records.list', ['board' => $board]);
     }
@@ -49,8 +46,8 @@ class BoardManualRecordController extends Controller
         $discription = $request->discription;
         $category_id = $request->category;
 
-        if ($type == "-" || $type == "+" && $value && $title && $discription) {
-            $board = board::where('id', $board)->first();
+        if ($type == "-" || $type == "+" && $value && $title && $discription) { //Validation (Will be replaced with requestprovider)
+            $board = Board::findOrFail($board);
             board_manual_record::create(array('user_id' => Auth::user()->id, 'board_id' => $board->id, 'category_id' => $category_id, 'type' => $type, 'value' => $value, 'title' => $title, 'discription' => $discription, 'attachment' => 'test.png'));
             //FIX!!!!!!!
         }

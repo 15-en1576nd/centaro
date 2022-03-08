@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\BoardController;
-use App\Models\board;
+use App\Models\Board;
 use App\Models\board_users;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class Board_UsersController extends Controller
     public function index()
     {
         $id = Session::get('currentboardid');
-        $boards = board::where('id', $id)->get(); //Select board  from url-parameter.
+        $boards = Board::where('id', $id)->get(); //Select board  from url-parameter.
         foreach ($boards as $board) {
             $board; //Split search-result in single array (This was made because many to many result).
         }
@@ -55,7 +55,7 @@ class Board_UsersController extends Controller
       }
         $currentboardid = Session::get('currentboardid');
         $id = User::where('email', $email)->first()->id;
-        $board = board::where('id', $currentboardid)->first();
+        $board = Board::where('id', $currentboardid)->first();
         $userboard = User::where('id', $id)->first()->board->where('id', $currentboardid)->first();
 
         if($userboard === null && $board->type == 'team') {
@@ -111,7 +111,7 @@ class Board_UsersController extends Controller
     {
         $currentboardid = Session::get('currentboardid');
 
-        $board = board::where('id', $currentboardid)->first();
+        $board = Board::where('id', $currentboardid)->first();
         $roleid = board_users::where('user_id', $id)->first()->board_role_id;
 
 

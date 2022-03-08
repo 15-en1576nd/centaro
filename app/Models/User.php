@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->hasOne(preference::class, 'user_id', 'id');
     }
     public function board() {
-        return $this->belongsToMany(board::class, 'board_users', 'user_id');
+        return $this->belongsToMany(Board::class, 'board_users', 'user_id');
     }
 
 //    public function localrole() {

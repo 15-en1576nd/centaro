@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\board;
+use App\Models\Board;
 use App\Models\board_economic_category;
 use App\Models\board_manual_record;
+use App\Models\color;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,10 @@ class BoardEconomicCategoryController extends Controller
      */
     public function index($board)
     {
-        $board = board::find($board);
+        $board = Board::findOrFail($board);
+        $colors = color::all();
 
-
-        return view('board.category.list', ['board' => $board]);
+        return view('board.category.list', ['board' => $board, 'colors' => $colors]);
     }
 
     /**
@@ -92,8 +93,8 @@ class BoardEconomicCategoryController extends Controller
      * @param  \App\Models\board_economic_category  $board_economic_category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(board_economic_category $board_economic_category)
+    public function destroy($board, board_economic_category $board_economic_category)
     {
-        //
+
     }
 }

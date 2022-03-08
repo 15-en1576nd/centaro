@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('board_economic_categories', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->integer('board_id');
-            $table->integer('color_id');
             $table->string('name');
-            $table->timestamps();
+            $table->string('hexcode');
+            $table->string('secondaryhexcolor');
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board_economic_categories');
+        Schema::dropIfExists('colors');
     }
 };

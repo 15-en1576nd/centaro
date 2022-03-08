@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\board;
+use App\Models\Board;
 use App\Models\board_users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,18 +42,17 @@ class BoardController extends Controller
     {
         $name = $request->name;
         $type = $request->type;
-        if (!$name || !$type) {
+        if (!$name || !$type) { //Validation (Will be replaced with requestprovider)
             return redirect()->back();
         }
-        $board = new board();
+        $board = new Board();
         $board->name = $name;
         $board->type = $type;
         $board->save();
         $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id,'board_role_id' => 99));
-         $latestboard = board::latest()->first();
-         $id = $latestboard->id;
+         $latestboard_id = Board::latest()->first()->id;
 
-        return redirect('/board/' . $id);
+        return redirect('/board/' . $latestboard_id);
     }
 
     /**
@@ -62,23 +61,22 @@ class BoardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Board $board)
     {
 
         $total = 0;
         $totalspendings = 0;
         $totalincome = 0;
-        Session::put('currentboardid', $id);
-        $board = board::where('id', $id)->first(); //Select board  from url-parameter.
-       
-        foreach ($board->manual_record as $record) {
-            if ($record->type == '+') {
-                $totalincome = $totalincome + $record->value;
-            } elseif($record->type == '-') {
-                $totalspendings = $totalspendings + $record->value;
+//        $board = board::findorfail($id); //Select board  from url-parameter.
+
+        foreach ($board->manual_record as $record) { //This function seperates (Spend & Income types)
+            if ($record->type === '+') {
+                $totalincome += $record->value;
+            } elseif($record->type === '-') {
+                $totalspendings += $record->value;
             }
             $singlerecord = $record->type . $record->value;
-            $total = $total + (int)$singlerecord;
+            $total += (int)$singlerecord;
         }
 
 
@@ -119,9 +117,10 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        $board = board::find($id);
+        $board = Board::find($id);
         $board->board_users()->detach();
         $board->manual_record()->delete();
+        $board->category()->delete();
         $board->delete();
         return redirect('/board');
     }

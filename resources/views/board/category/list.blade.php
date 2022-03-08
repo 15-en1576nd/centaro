@@ -6,7 +6,11 @@
         @csrf
 
         <input type="text" name="name" placeholder="Name">
-        <input type="color" name="color" placeholder="#000000">
+        <select name="color">
+            @foreach($colors as $color)
+                <option style="background: {{$color->hexcode}}; color: {{$color->secondaryhexcolor}}">{{$color->name}}</option>
+            @endforeach
+        </select>
         <input type="submit" value="add">
 
     </form>

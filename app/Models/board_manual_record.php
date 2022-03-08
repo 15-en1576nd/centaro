@@ -19,7 +19,7 @@ class board_manual_record extends Model
         'attachment',
     ];
     public function board() {
-        return $this->hasOne(board::class, 'id', 'board_id');
+        return $this->hasOne(Board::class, 'id', 'board_id');
     }
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');

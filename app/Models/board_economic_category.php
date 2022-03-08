@@ -14,6 +14,9 @@ class board_economic_category extends Model
         'name',
     ];
     public function board() {
-        return $this->hasOne(board::class, 'board_id', 'id');
+        return $this->hasOne(Board::class, 'board_id', 'id');
+    }
+    public function color() {
+        return $this->hasOne(color::class, 'color_id', 'id');
     }
 }

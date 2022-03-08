@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\board;
+use App\Models\Board;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,9 +23,9 @@ class BoardMiddleware
     public function handle(Request $request, Closure $next)
     {
         $id = $request->route('board'); //Get board-id from url.
-        $idexists = board::where('id', '=', $id)->first(); //Search id of board in array.
+        $idexists = Board::where('id', '=', $id)->first(); //Search id of board in array.
         if (isset($id) && $idexists != null) {  //Check if board exist & user has access to board.
-            $boards = board::where('id', $id)->get(); //Get board's from user.
+            $boards = Board::where('id', $id)->get(); //Get board's from user.
             foreach ($boards as $board) { //Split all boards to single arrays.
                 $board;
             }
