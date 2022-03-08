@@ -3,7 +3,7 @@
 </a>
 
 <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
-    <form action="/board/{{$board->id}}/records" method="post">
+    <form method="post">
         @csrf
         <select name="type">
             <option value="-">-</option>
@@ -35,7 +35,7 @@
     <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
 
         <div style="width: 100%; font-weight: bold; color: @if($record->type == "-")indianred @elseif($record->type == "+") limegreen @endif;">{{$record->type . '€' . $record->value}},-</div>
-        <div style="width: 100%; color: {{$record->category->color}}">{{$record->category->name}}</div>
+        <div style="width: 100%; color: {{$record->category->color->hexcode}}">{{$record->category->name}}</div>
         <div style="width: 100%; flex-wrap: wrap; font-weight: lighter">{{$record->title}}</div>
         <div style="width: 50%">{{$record->created_at->format('d/m/Y')}}</div>
         <div style="width: 25%">{{$record->user->name}}</div>

@@ -2,7 +2,7 @@
     <button>terug</button>
 </a>
 <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
-    <form action="/boards/{{$board->id}}/category" method="post">
+    <form method="post">
         @csrf
 
         <input type="text" name="name" placeholder="Name">
