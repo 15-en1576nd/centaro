@@ -1,4 +1,4 @@
-<form method="post" >
+<form method="post" action="{{route('boards.store')}}">
     @csrf
     <input type="text" name="name" placeholder="name">
     <select name="type">

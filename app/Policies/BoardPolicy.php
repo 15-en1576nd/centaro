@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Policies;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Board;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -43,7 +43,7 @@ class BoardPolicy
      */
     public function create(User $user)
     {
-        //
+        Return Auth::check();
     }
 
     /**

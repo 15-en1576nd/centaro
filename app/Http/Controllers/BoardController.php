@@ -55,7 +55,7 @@ class BoardController extends Controller
         $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id, 'board_role_id' => 99));
         $latestboard_id = Board::latest()->first()->id;
 
-        return redirect('/board/' . $latestboard_id);
+        return redirect('/boards/' . $latestboard_id);
     }
 
     /**

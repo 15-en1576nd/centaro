@@ -20,9 +20,9 @@ Route::get('/', function () {
 Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->middleware(['auth'])->name('dashboard');
 
 Route::resource('boards', \App\Http\Controllers\BoardController::class);
-Route::resource('boards.records', \App\Http\Controllers\BoardManualRecordController::class)->middleware(['board']);
-Route::resource('boardusers', \App\Http\Controllers\Board_UsersController::class)->middleware(['board']);
-Route::resource('boards.category', \App\Http\Controllers\BoardEconomicCategoryController::class)->middleware(['board']);
+Route::resource('boards.records', \App\Http\Controllers\BoardManualRecordController::class);
+Route::resource('boardusers', \App\Http\Controllers\Board_UsersController::class);
+Route::resource('boards.category', \App\Http\Controllers\BoardEconomicCategoryController::class);
 
 
 require __DIR__.'/auth.php';
