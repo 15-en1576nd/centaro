@@ -110,8 +110,9 @@ class Board_UsersController extends Controller
 
 
        if (Auth::user()->id != $user->id && $roleid != 99) {
+
            $board->board_users()->wherePivot('user_id', '=', $user->id)->detach();
        }
-        return redirect('/boards/' . $board->id);
+        return redirect('/boards/' . $board->id . '/users');
     }
 }

@@ -1,5 +1,5 @@
 <a href="/boards/{{$board->id}}"><button>terug</button></a>
-<form action="/boards/users" method="post">
+<form action="/boards/{{$board->id}}/users" method="post">
 
     @csrf
     <input type="email" name="email" placeholder="email of user">

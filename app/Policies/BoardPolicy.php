@@ -80,7 +80,7 @@ class BoardPolicy
      */
     public function restore(User $user, Board $board)
     {
-        //
+        return false;
     }
 
     /**

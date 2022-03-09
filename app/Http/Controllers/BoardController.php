@@ -47,6 +47,7 @@ class BoardController extends Controller
         $name = $request->name;
         $type = $request->type;
         if (!$name || !$type) { //Validation (Will be replaced with requestprovider)
+            // heel gay
             return redirect()->back();
         }
         $board = new Board();
