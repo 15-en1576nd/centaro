@@ -16,7 +16,10 @@ class BoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function __construct(User $user)
+    {
+        $this->authorizeResource(Board::class);
+    }
 
     public function index()
     {
