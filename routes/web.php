@@ -21,7 +21,7 @@ Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'vi
 
 Route::resource('boards', \App\Http\Controllers\BoardController::class);
 Route::resource('boards.records', \App\Http\Controllers\BoardManualRecordController::class);
-Route::resource('boardusers', \App\Http\Controllers\Board_UsersController::class);
+Route::resource('boards.users', \App\Http\Controllers\Board_UsersController::class);
 Route::resource('boards.category', \App\Http\Controllers\BoardEconomicCategoryController::class);
 
 

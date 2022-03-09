@@ -9,7 +9,7 @@
 <p>Type: {{$board->type}}</p>
 
 <br><br>
-<a href="/boardusers"><button>edit</button></a>
+<a href="/boards/{{$board->id}}/users"><button>edit</button></a>
 Members:
 @foreach($board->board_users as $user)
     <p>

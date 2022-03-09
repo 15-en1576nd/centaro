@@ -30,6 +30,7 @@ class BoardPolicy
      */
     public function view(User $user, Board $board)
     {
+
         $board_user_id = $board->board_users->pluck('id')->all();
         return in_array($user->id, $board_user_id);
 

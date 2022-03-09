@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Board;
 use App\Models\board_users;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -15,10 +16,7 @@ class BoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->authorizeResource(Board::class);
-    }
+
 
     public function index()
     {
@@ -53,9 +51,8 @@ class BoardController extends Controller
         $board->type = $type;
         $board->save();
         $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id, 'board_role_id' => 99));
-        $latestboard_id = Board::latest()->first()->id;
 
-        return redirect('/boards/' . $latestboard_id);
+        return redirect('/boards/' . $board->id);
     }
 
     /**
@@ -79,7 +76,7 @@ class BoardController extends Controller
                 $totalspendings += $record->value;
             }
             $singlerecord = $record->type . $record->value;
-            $total += (int)$singlerecord;
+            $total += (float)$singlerecord;
         }
 
 
@@ -123,7 +120,7 @@ class BoardController extends Controller
         $board->manual_record()->delete();
         $board->category()->delete();
         $board->delete();
-        return redirect('/board');
+        return redirect('/boards');
     }
 
 

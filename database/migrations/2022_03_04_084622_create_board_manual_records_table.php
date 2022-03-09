@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('discription');
             $table->string('type');
-            $table->string('value');
+            $table->float('value');
             $table->string('attachment');
             $table->timestamps();
         });

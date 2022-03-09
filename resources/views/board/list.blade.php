@@ -1,5 +1,5 @@
 @foreach(Auth::user()->board as $board)
-    <a style="text-decoration: none" href="/board/{{$board->id}}">
+    <a style="text-decoration: none" href="/boards/{{$board->id}}">
         <div style="background: #2563eb; color:white; display: flex; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">
             <h3>{{$board->name}}: {{$board->id}}</h3>
 

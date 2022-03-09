@@ -1,4 +1,4 @@
-<a href="/board/{{$board->id}}">
+<a href="/boards/{{$board->id}}">
     <button>terug</button>
 </a>
 
@@ -11,9 +11,9 @@
         </select>
         <select name="category">
             @foreach($board->category as $category)
-                <option value="{{$category->id}}" style="background: {{$category->color}}">{{$category->name}}</option>
+                <option value="{{$category->id}}" style="background: {{$category->color->hexcode}}">{{$category->name}}</option>
             @endforeach
-            <option onclick="location.href=('/board/{{$board->id}}/category')">Create</option>
+            <option onclick="location.href=('/boards/{{$board->id}}/category')">Create</option>
         </select>
         <input type="number" step="0.1" name="value" placeholder="Amount. 10">
         <input type="text" name="title" placeholder="Title">

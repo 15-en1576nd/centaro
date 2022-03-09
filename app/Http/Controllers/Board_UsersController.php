@@ -16,15 +16,10 @@ class Board_UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+    public function index(Board $board)
     {
-        $id = Session::get('currentboardid');
-        $boards = Board::where('id', $id)->get(); //Select board  from url-parameter.
-        foreach ($boards as $board) {
-            $board; //Split search-result in single array (This was made because many to many result).
-        }
-
-
 
         return view('board.users.list', ['board' => $board]);
     }
@@ -45,23 +40,22 @@ class Board_UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Board $board, Request $request)
     {
-      $email = $request->email;
-       $emailcheck = User::where('email', '=', $email)->exists();
+       $emailcheck = User::where('email', '=', $request->email)->exists();
 
-      if (!$email || $emailcheck === false) {
+      if (!$request->email || $emailcheck === false) {
           return redirect()->back(); // WITH ERROR
       }
-        $currentboardid = Session::get('currentboardid');
-        $id = User::where('email', $email)->first()->id;
-        $board = Board::where('id', $currentboardid)->first();
-        $userboard = User::where('id', $id)->first()->board->where('id', $currentboardid)->first();
+
+        $id = User::where('email', $request->email)->first()->id;
+        $board = Board::where('id', $board->id)->first();
+        $userboard = User::find($id)->board->find($board->id);
 
         if($userboard === null && $board->type == 'team') {
             $board->board_users()->attach('board_id', array('user_id' => $id,'board_role_id' => 1));
-        } elseif(!$currentboardid) {
-            return redirect('/board');
+        } elseif(!$board->id) {
+            return redirect('/boards');
         }
         return redirect()->back();
 
@@ -107,17 +101,17 @@ class Board_UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Board $board, User $user)
     {
-        $currentboardid = Session::get('currentboardid');
-
-        $board = Board::where('id', $currentboardid)->first();
-        $roleid = board_users::where('user_id', $id)->first()->board_role_id;
 
 
-       if (Auth::user()->id != $id && $roleid != 99) {
-           $board->board_users()->wherePivot('user_id', '=', $id)->detach();
+
+        $roleid = board_users::where('user_id', $user->id)->first()->board_role_id;
+
+
+       if (Auth::user()->id != $user->id && $roleid != 99) {
+           $board->board_users()->wherePivot('user_id', '=', $user->id)->detach();
        }
-        return redirect()->back();
+        return redirect('/boards/' . $board->id);
     }
 }
