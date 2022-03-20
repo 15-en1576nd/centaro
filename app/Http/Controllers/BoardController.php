@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Board;
-use App\Models\board_users;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use App\Models\Board;
+use App\Http\Requests\StoreBoardRequest;
+use App\Http\Requests\UpdateBoardRequest;
+use App\Models\BoardRecord;
 
 class BoardController extends Controller
 {
@@ -16,11 +14,6 @@ class BoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(User $user)
-    {
-        $this->authorizeResource(Board::class);
-    }
-
     public function index()
     {
         return view('board.list');
@@ -39,22 +32,21 @@ class BoardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\StoreBoardRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBoardRequest $request)
     {
         $name = $request->name;
         $type = $request->type;
         if (!$name || !$type) { //Validation (Will be replaced with requestprovider)
-            // heel gay
             return redirect()->back();
         }
         $board = new Board();
         $board->name = $name;
         $board->type = $type;
         $board->save();
-        $board->board_users()->attach('board_id', array('user_id' => Auth::user()->id, 'board_role_id' => 99));
+        $board->users()->attach('board_id', array('user_id' => Auth::user()->id, 'role_id' => 99));
 
         return redirect('/boards/' . $board->id);
     }
@@ -62,18 +54,15 @@ class BoardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
     public function show(Board $board)
     {
-
-        $total = 0;
         $totalspendings = 0;
         $totalincome = 0;
-//        $board = board::findorfail($id); //Select board  from url-parameter.
-
-        foreach ($board->manual_record as $record) { //This function seperates (Spend & Income types)
+        $total = 0;
+        foreach ($board->records as $record) { //This function seperates (Spend & Income types)
             if ($record->type === '+') {
                 $totalincome += $record->value;
             } elseif ($record->type === '-') {
@@ -87,14 +76,13 @@ class BoardController extends Controller
         return view('board.view', ['board' => $board, 'total' => $total, 'totalspendings' => $totalspendings, 'totalincome' => $totalincome]);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Board $board)
     {
         //
     }
@@ -102,11 +90,11 @@ class BoardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \App\Http\Requests\UpdateBoardRequest  $request
+     * @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBoardRequest $request, Board $board)
     {
         //
     }
@@ -114,18 +102,15 @@ class BoardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  \App\Models\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Board $board)
     {
-        $board = Board::find($id);
-        $board->board_users()->detach();
-        $board->manual_record()->delete();
-        $board->category()->delete();
+        $board->users()->detach();
+        $board->records()->delete();
+        $board->categories()->delete();
         $board->delete();
         return redirect('/boards');
     }
-
-
 }

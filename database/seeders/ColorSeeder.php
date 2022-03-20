@@ -16,13 +16,13 @@ class ColorSeeder extends Seeder
      */
     public function run()
     {
-        color::create(array('name' => 'indigo', 'hexcode' => '#7114C5', 'secondaryhexcode' => 'white'));
-        color::create(array('name' => 'pink', 'hexcode' => '#fd88f4', 'secondaryhexcode' => 'white'));
-        color::create(array('name' => 'seablue', 'hexcode' => '#53b2ff', 'secondaryhexcode' => 'white'));
-        color::create(array('name' => 'orange', 'hexcode' => '#ffbb43', 'secondaryhexcode' => 'white'));
-        color::create(array('name' => 'green', 'hexcode' => '#38b900', 'secondaryhexcode' => 'white'));
-        color::create(array('name' => 'limegreen', 'hexcode' => '#32CD32', 'secondaryhexcode' => 'white'));
-        color::create(array('name' => 'darkblue', 'hexcode' => '#0047AB', 'secondaryhexcode' => 'white'));
+        color::create(array('name' => 'indigo', 'code' => '#7114C5'));
+        color::create(array('name' => 'pink', 'code' => '#fd88f4'));
+        color::create(array('name' => 'seablue', 'code' => '#53b2ff'));
+        color::create(array('name' => 'orange', 'code' => '#ffbb43'));
+        color::create(array('name' => 'green', 'code' => '#38b900'));
+        color::create(array('name' => 'limegreen', 'code' => '#32CD32'));
+        color::create(array('name' => 'darkblue', 'code' => '#0047AB'));
 
     }
 }

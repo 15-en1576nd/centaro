@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Board;
+use App\Models\BoardUser;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class BoardPolicy
+class BoardUserPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class BoardPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Board  $board
+     * @param  \App\Models\BoardUser  $boardUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Board $board)
+    public function view(User $user, BoardUser $boardUser)
     {
         //
     }
@@ -48,10 +48,10 @@ class BoardPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Board  $board
+     * @param  \App\Models\BoardUser  $boardUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Board $board)
+    public function update(User $user, BoardUser $boardUser)
     {
         //
     }
@@ -60,10 +60,10 @@ class BoardPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Board  $board
+     * @param  \App\Models\BoardUser  $boardUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Board $board)
+    public function delete(User $user, BoardUser $boardUser)
     {
         //
     }
@@ -72,10 +72,10 @@ class BoardPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Board  $board
+     * @param  \App\Models\BoardUser  $boardUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Board $board)
+    public function restore(User $user, BoardUser $boardUser)
     {
         //
     }
@@ -84,10 +84,10 @@ class BoardPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Board  $board
+     * @param  \App\Models\BoardUser  $boardUser
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Board $board)
+    public function forceDelete(User $user, BoardUser $boardUser)
     {
         //
     }

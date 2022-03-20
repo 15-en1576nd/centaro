@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class board_economic_category extends Model
+class BoardCategory extends Model
 {
     use HasFactory;
     protected $fillable = [

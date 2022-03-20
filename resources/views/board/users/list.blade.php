@@ -5,7 +5,7 @@
     <input type="email" name="email" placeholder="email of user">
     <input type="submit" value="Add">
 </form>
-@foreach($board->board_users as $user)
+@foreach($board->users as $user)
 
     {{$user->name}}
     {{$user->surname}}

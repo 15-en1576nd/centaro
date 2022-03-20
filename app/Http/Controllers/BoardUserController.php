@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\BoardController;
+use App\Http\Requests\StoreBoardUserRequest;
 use App\Models\Board;
-use App\Models\board_users;
+use App\Models\BoardUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Session;
 
-class Board_UsersController extends Controller
+class BoardUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,7 +31,7 @@ class Board_UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Board $board)
     {
         //
     }
@@ -40,20 +42,19 @@ class Board_UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Board $board, Request $request)
+    public function store(StoreBoardUserRequest $request, Board $board)
     {
-       $emailcheck = User::where('email', '=', $request->email)->exists();
+        $emailcheck = User::where('email', '=', $request->email)->exists();
 
-      if (!$request->email || $emailcheck === false) {
-          return redirect()->back(); // WITH ERROR
-      }
+        if (!$request->email || $emailcheck === false) {
+            return redirect()->back(); // WITH ERROR
+        }
 
         $id = User::where('email', $request->email)->first()->id;
-        $board = Board::where('id', $board->id)->first();
-        $userboard = User::find($id)->board->find($board->id);
+        $userboard = User::find($id)->boards->find($board->id);
 
         if($userboard === null && $board->type == 'team') {
-            $board->board_users()->attach('board_id', array('user_id' => $id,'board_role_id' => 1));
+            $board->users()->attach('board_id', array('user_id' => $id,'role_id' => 1));
         } elseif(!$board->id) {
             return redirect('/boards');
         }
@@ -106,13 +107,13 @@ class Board_UsersController extends Controller
 
 
 
-        $roleid = board_users::where('user_id', $user->id)->first()->board_role_id;
+        $roleid = BoardUser::where('user_id', $user->id)->first()->board_role_id;
 
 
-       if (Auth::user()->id != $user->id && $roleid != 99) {
+        if (Auth::user()->id != $user->id && $roleid != 99) {
 
-           $board->board_users()->wherePivot('user_id', '=', $user->id)->detach();
-       }
+            $board->users()->wherePivot('user_id', '=', $user->id)->detach();
+        }
         return redirect('/boards/' . $board->id . '/users');
     }
 }

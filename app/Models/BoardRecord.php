@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class board_manual_record extends Model
+class BoardRecord extends Model
 {
     use HasFactory;
     protected $fillable = [
         'type',
         'value',
         'title',
-        'discription',
+        'description',
         'board_id',
         'user_id',
         'category_id',
@@ -25,6 +25,6 @@ class board_manual_record extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function category() {
-        return $this->hasOne(board_economic_category::class, 'id', 'category_id');
+        return $this->hasOne(BoardCategory::class, 'id', 'category_id');
     }
 }
