@@ -11,7 +11,7 @@
 <br><br>
 <a href="/boards/{{$board->id}}/users"><button>edit</button></a>
 Members:
-@foreach($board->board_users as $user)
+@foreach($board->users as $user)
     <p>
     {{$user->name}}
         {{$user->surname}}

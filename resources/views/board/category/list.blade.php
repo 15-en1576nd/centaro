@@ -8,7 +8,7 @@
         <input type="text" name="name" placeholder="Name">
         <select name="color">
             @foreach($colors as $color)
-                <option value="{{$color->id}}" style="background: {{ $color->hexcode }}; color: {{$color->secondaryhexcode}}">{{$color->name}}</option>
+                <option value="{{$color->id}}" style="background: {{ $color->code }}; color: white">{{$color->name}}</option>
             @endforeach
         </select>
         <input type="submit" value="add">
@@ -17,8 +17,8 @@
 </div>
 <br><br>
 <div style="width: 80%; flex-direction: row; display: flex">
-@foreach($board->category->sortByDesc('created_at') as $category)
-    <div style="display: flex;margin-inline: 4%; width: max-content; font-weight: bold; border-radius: 8%; border: 0.5px black solid; padding: 4px; display: flex; color: {{$category->color->secondaryhexcode}}; background: {{$category->color->hexcode}}">
+@foreach($board->categories->sortByDesc('created_at') as $category)
+    <div style="display: flex;margin-inline: 4%; width: max-content; font-weight: bold; border-radius: 8%; border: 0.5px black solid; padding: 4px; display: flex; color: white; background: {{$category->color->code}}">
 
        {{$category->name}}
     </div>

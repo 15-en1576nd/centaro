@@ -32,12 +32,12 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
 </form>
 <a href="/boards/create"><button>Create</button></a> Boards:
 
-@forelse(Auth::user()->board as $board)
+@forelse(Auth::user()->boards as $board)
     <a style="text-decoration: none" href="/boards/{{$board->id}}">
-    <div style="background: #2563eb; color:white; display: flex; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">
+    <div style="background: #2563eb; color:white; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">
         <h3>{{$board->name}}: {{$board->id}}</h3>
       <p>{{$board->type}}</p>
-        @foreach($board->board_users as $user)
+        @foreach($board->users as $user)
            <p style="color: red">{{$user->name}}</p>
         @endforeach
     </div>
