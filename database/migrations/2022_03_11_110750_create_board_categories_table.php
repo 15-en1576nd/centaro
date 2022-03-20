@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('preferences', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->string('lang');
-            $table->string('valuta');
+        Schema::create('board_categories', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('board_id');
+            $table->unsignedBigInteger('color_id');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preferences');
+        Schema::dropIfExists('board_categories');
     }
 };

@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('permission_roles', function (Blueprint $table) {
-            $table->integer('role_id');
-            $table->integer('permission_id');
+        Schema::create('board_users', function (Blueprint $table) {
+            $table->unsignedBigInteger('board_id')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->onDelete('cascade');
+            $table->unsignedBigInteger('role_id')->onDelete('cascade');
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permission_roles');
+        Schema::dropIfExists('board_users');
     }
 };

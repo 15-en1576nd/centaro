@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('board_manual_records', function (Blueprint $table) {
+        Schema::create('board_debit_credits', function (Blueprint $table) {
             $table->id();
-            $table->integer('board_id');
-            $table->integer('user_id');
-            $table->integer('category_id');
+            $table->unsignedBigInteger('board_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('title');
-            $table->string('discription');
+            $table->string('description')->nullable();
             $table->string('type');
             $table->float('value');
-            $table->string('attachment');
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board_manual_records');
+        Schema::dropIfExists('board_debit_credits');
     }
 };
