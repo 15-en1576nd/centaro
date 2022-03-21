@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-
-Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
+Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->name('dashboard');
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
@@ -26,5 +26,5 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('boards.category', \App\Http\Controllers\BoardCategoryController::class);
 
 });
-
+});
 require __DIR__.'/auth.php';
