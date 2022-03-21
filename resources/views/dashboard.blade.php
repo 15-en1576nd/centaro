@@ -1,7 +1,7 @@
 @extends('parts.main')
 @section('title', 'Dashboard')
 @section('content')
-<h1 class="text-gray-600 font-bold text-xl">Welcome {{ Auth::user()->name . ' ' . Auth::user()->surname }}</h1>
+<h1 class="font-bold text-xl">Welcome {{ Auth::user()->name . ' ' . Auth::user()->surname }}</h1>
 <div class="flex flex-col">
     <p>Your unique user id: <strong>{{Auth::user()->id}}</strong></p>
     <p>First Name: {{Auth::user()->name}}</p>
