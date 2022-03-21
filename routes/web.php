@@ -19,11 +19,10 @@ Route::get('/', function () {
 
 Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->middleware(['auth'])->name('dashboard');
 
-
+Route::middleware(['web'])->group(function () {
 Route::resource('boards', \App\Http\Controllers\BoardController::class);
 Route::resource('boards.records', \App\Http\Controllers\BoardRecordController::class);
 Route::resource('boards.users', \App\Http\Controllers\BoardUserController::class);
 Route::resource('boards.category', \App\Http\Controllers\BoardCategoryController::class);
-
-
+});
 require __DIR__.'/auth.php';
