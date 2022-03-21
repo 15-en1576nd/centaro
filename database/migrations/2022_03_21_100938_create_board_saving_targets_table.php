@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('board_saving_targets', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('board_id');
+            $table->unsignedBigInteger('color_id');
+            $table->unsignedBigInteger('board_user_id');
+            $table->string('name');
+            $table->string('description');
+            $table->float('value');
+            $table->unsignedInteger('status');
+            $table->date('deadline');
             $table->timestamps();
         });
     }
