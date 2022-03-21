@@ -1,3 +1,5 @@
+@extends('parts.board')
+@section('content')
 <h1>{{$board->name}}</h1>
 <h2>Uitgerekend saldo:</h2>
 <h2 style="color: #2563eb">€{{$total}},- <button alt="Het kan gebeuren dat je saldo niet meer up-to-date is. Daarvoor is deze knop.">Corrigeer</button></h2>
@@ -26,5 +28,5 @@ Members:
     @csrf
 <input type="submit" value="Destroy">
 </form>
-
+@endsection
 
