@@ -16,7 +16,7 @@
 <section class="min-h-screen bg-zinc-800" x-data="{ sideBar: false }">
     <nav class="fixed top-0 left-0 z-20 h-full pb-10 overflow-x-hidden overflow-y-auto transition origin-left transform bg-zinc-900 w-60 md:translate-x-0" :class="{ '-translate-x-full' : !sideBar, 'translate-x-0' : sideBar }" @click.away="sideBar = false">
        <a href="/" class="flex items-center justify-center text-3xl text-center px-4 py-3 text-emerald-600"> Centaro </a>
-       <nav class="text-sm font-medium text-gray-500" aria-label="Main Navigation">
+       <nav class="text-sm font-medium text-gray-400" aria-label="Main Navigation">
           <a class="flex items-center px-4 py-2 transition cursor-pointer group hover:bg-emerald-700 hover:text-gray-200 rounded-md m-2" href="/dashboard">
            <svg class="h-6 w-6"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -27,7 +27,7 @@
             <svg class="h-6 w-6"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
             </svg>
-            <span class="ml-2">Boards</span>
+            <span class="ml-2">Economic Boards</span>
           </a>
           <a class="flex items-center px-4 py-2 transition cursor-pointer group hover:bg-emerald-700 hover:text-gray-200 rounded-md m-2" href="/account/view">
             <svg class="h-6 w-6"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />  <circle cx="12" cy="7" r="4" /></svg>
