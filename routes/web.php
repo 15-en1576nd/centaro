@@ -16,11 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+//Inlog required
 Route::group(['middleware' => 'auth'], function () {
 Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->name('dashboard');
 
 Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->middleware(['auth'])->name('dashboard');
-
+//Dashboard routes
 Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
     Route::resource('boards.records', \App\Http\Controllers\BoardRecordController::class);
@@ -29,4 +30,5 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('boards.savingtargets', \App\Http\Controllers\BoardSavingTargetController::class);
 });
 });
+//Import auth routes
 require __DIR__.'/auth.php';
