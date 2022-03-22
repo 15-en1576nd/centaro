@@ -1,23 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->name . ' ' . Auth::user()->surname }}</p>
-<table>
-    <tr style="flex-direction: column; display: flex">
-        <td>Your unique user id: {{Auth::user()->id}}</td>
-        <td>First Name: {{Auth::user()->name}}</td>
-        <td>Surname: {{Auth::user()->surname}}</td>
-        <td>Email: {{Auth::user()->email}}</td>
-
-    </tr>
-</table>
+@extends('parts.main')
+@section('title', 'Dashboard')
+@section('content')
+<h1 class="font-bold text-xl">Welcome {{ Auth::user()->name . ' ' . Auth::user()->surname }}</h1>
+<div class="flex flex-col">
+    <p>Your unique user id: <strong>{{Auth::user()->id}}</strong></p>
+    <p>First Name: {{Auth::user()->name}}</p>
+    <p>Surname: {{Auth::user()->surname}}</p>
+    <p>Email: {{Auth::user()->email}}</p>
+</div>
 @if(isset(Auth::user()->preference))
     Lang:
 {{Auth::user()->preference->lang}}
@@ -45,7 +35,4 @@ You're logged in! <br> <p style="font-weight: bold"> Welcome, {{ Auth::user()->n
 @empty
     <p style="color: gray">Geen borden gevonden!</p>
 @endforelse
-
-</body>
-</html>
-
+@endsection
