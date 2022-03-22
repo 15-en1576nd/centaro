@@ -23,7 +23,8 @@ Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'vi
 Route::resource('boards', \App\Http\Controllers\BoardController::class);
 Route::resource('boards.records', \App\Http\Controllers\BoardRecordController::class);
 Route::resource('boards.users', \App\Http\Controllers\BoardUserController::class);
-Route::resource('boards.category', \App\Http\Controllers\BoardCategoryController::class);
+Route::resource('boards.categories', \App\Http\Controllers\BoardCategoryController::class);
+Route::resource('boards.savingtargets', \App\Http\Controllers\BoardSavingTargetController::class);
 
 
 require __DIR__.'/auth.php';
