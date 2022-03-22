@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Board;
 use App\Models\BoardSavingTarget;
 use App\Http\Requests\StoreBoardSavingTargetRequest;
 use App\Http\Requests\UpdateBoardSavingTargetRequest;
+use App\Models\Color;
+use Illuminate\Support\Facades\Auth;
 
 class BoardSavingTargetController extends Controller
 {
@@ -13,9 +16,19 @@ class BoardSavingTargetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Board $board)
     {
-        //
+        $colors = color::all();
+        $total = 0;
+        foreach ($board->records as $record) {
+            if ($record->type === '+') {
+                $total += $record->value;
+            } elseif ($record->type === '-') {
+                $total -= $record->value;
+            }
+        }
+
+        return view('board.savingtargets.list', ['board' => $board, 'colors' => $colors, 'total' => $total]);
     }
 
     /**
@@ -34,9 +47,15 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Http\Requests\StoreBoardSavingTargetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBoardSavingTargetRequest $request)
-    {
-        //
+    public function store(Board $board, StoreBoardSavingTargetRequest $request)
+    {   $color = $request->color;
+        $value = $request->value;
+        $title = $request->title;
+        $description = $request->description;
+        $deadline = $request->deadline;
+
+        BoardSavingTarget::create(array('color_id' => $color, 'user_id' => Auth::user()->id,'board_id' => $board->id,'value' => $value, 'name' => $title, 'description' => $description, 'deadline' => $deadline, 'status' => 'active'));
+        return redirect()->back();
     }
 
     /**
