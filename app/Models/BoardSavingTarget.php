@@ -11,7 +11,7 @@ class BoardSavingTarget extends Model
     protected $fillable = [
         'board_id',
         'color_id',
-        'board_user_id',
+        'user_id',
         'name',
         'description',
         'value',
