@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->float('value');
-            $table->unsignedInteger('status');
+            $table->string('status');
             $table->date('deadline');
             $table->timestamps();
         });
