@@ -1,4 +1,5 @@
 @extends('parts.board')
+@section('title', 'Board - ' . $board->name)
 @section('content')
 <h1>{{$board->name}}</h1>
 <h2>Uitgerekend saldo:</h2>
