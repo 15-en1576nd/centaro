@@ -21,4 +21,7 @@ class Board extends Model
     public function categories() {
         return $this->hasMany(BoardCategory::class, 'board_id', 'id');
     }
+    public function savingtargets() {
+        return $this->hasMany(BoardSavingTarget::class, 'board_id', 'id');
+    }
 }
