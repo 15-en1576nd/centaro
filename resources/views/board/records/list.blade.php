@@ -27,11 +27,11 @@
 </div>
 <br><br>
 <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row; font-weight: bold">
-<div style="width: 100%;">Bedrag</div>
-<div style="width: 100%;">Categorie</div>
-<div style="width: 100%;">Omschrijving</div>
-<div style="width: 50%;">Datum</div>
-<div style="width: 25%;">Gebruiker:</div>
+<div style="width: 100%;">Amount</div>
+<div style="width: 100%;">Category</div>
+<div style="width: 100%;">Title</div>
+<div style="width: 50%;">Date</div>
+<div style="width: 25%;">User</div>
 </div>
 @forelse($board->records->sortByDesc('created_at') as $record)
     <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
@@ -44,7 +44,7 @@
     </div>
 @empty
     <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row; justify-content: center; color: gray">
-        <p>Geen uitgaven/inkomsten gevonden.</p>
+        <p>No transactions found.</p>
     </div>
 @endforelse
 @endsection
