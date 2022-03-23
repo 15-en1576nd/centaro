@@ -5,11 +5,11 @@
 <h2 style="color: indianred">€{{$totalspendings}},-</h2>
 <h2>Maandelijkse Inkomsten:</h2>
 <h2 style="color: green">€{{$totalincome}},-</h2>
-<a href="/boards/{{$board->id}}/records"><button>Manage economics</button></a>
+<a href="/dashboard/boards/{{$board->id}}/records"><button>Manage economics</button></a>
 <p>Type: {{$board->type}}</p>
 
 <br><br>
-<a href="/boards/{{$board->id}}/users"><button>edit</button></a>
+<a href="/dashboard/boards/{{$board->id}}/users"><button>edit</button></a>
 Members:
 @foreach($board->users as $user)
     <p>

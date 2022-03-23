@@ -1,12 +1,18 @@
-@foreach(Auth::user()->boards as $board)
-    <a style="text-decoration: none" href="/boards/{{$board->id}}">
-        <div style="background: #2563eb; color:white; display: flex; border: 1px solid black; padding: 2px; display: flex; flex-direction: column; width: max-content; height: auto">
-            <h3>{{$board->name}}: {{$board->id}}</h3>
+@extends('parts.main')
+@section('title', 'Boards')
+@section('content')
+<div class="flex flex-row w-full flex-wrap justify-center">
+    @foreach(Auth::user()->boards as $board)
+            <div class="flex flex-col m-3 p-2 w-1/4 text-center bg-zinc-900  rounded-md">
+                <a href="/dashboard/boards/{{$board->id}}" class="text-3xl break-words">{{$board->name}}: {{$board->id}}</a>
 
-            <p>{{$board->type}}</p>
-            @foreach($board->users as $user)
-                <p style="color: red">{{$user->name}}</p>
-            @endforeach
-        </div>
-    </a>
-@endforeach
+                <p class="capitalize">{{$board->type}}</p>
+                <div class="flex flex-row justify-around flex-wrap">
+                    @foreach($board->users as $user)
+                        <p style="color: red">{{$user->name}}</p>
+                    @endforeach
+                </div>
+            </div>
+    @endforeach
+</div>
+@endsection
