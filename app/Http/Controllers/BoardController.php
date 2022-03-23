@@ -48,7 +48,7 @@ class BoardController extends Controller
         $board->save();
         $board->users()->attach('board_id', array('user_id' => Auth::user()->id, 'role_id' => 99));
 
-        return redirect('/boards/' . $board->id);
+        return redirect('/dashboard/boards/' . $board->id);
     }
 
     /**
@@ -111,6 +111,6 @@ class BoardController extends Controller
         $board->records()->delete();
         $board->categories()->delete();
         $board->delete();
-        return redirect('/boards');
+        return redirect('/dashboard/boards');
     }
 }
