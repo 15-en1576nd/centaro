@@ -1,6 +1,9 @@
 @extends('parts.main')
 @section('title', 'Boards')
 @section('content')
+<div class="flex p-3 rounded-md justify-centerw-3/4 bg-zinc-900">
+    <a class="p-2 transition rounded-md bg-emerald-700 hover:bg-emerald-600" href="/dashboard/boards/create">Create Board</a>
+</div>
 <div class="flex flex-row w-full flex-wrap justify-center">
     @forelse(Auth::user()->boards as $board)
             <div class="flex flex-col m-3 p-2 w-1/4 text-center bg-zinc-900  rounded-md">
