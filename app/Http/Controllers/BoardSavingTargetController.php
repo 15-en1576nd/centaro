@@ -20,7 +20,7 @@ class BoardSavingTargetController extends Controller
     {
         $colors = color::all();
         $total = 0;
-        foreach ($board->records as $record) {
+        foreach ($board->records as $record) { //Get total board value
             if ($record->type === '+') {
                 $total += $record->value;
             } elseif ($record->type === '-') {
@@ -52,7 +52,7 @@ class BoardSavingTargetController extends Controller
         $value = $request->value;
         $title = $request->title;
         $description = $request->description;
-        $deadline = $request->deadline;
+        $deadline = $request->deadline; //Deadline date
 
         BoardSavingTarget::create(array('color_id' => $color, 'user_id' => Auth::user()->id,'board_id' => $board->id,'value' => $value, 'name' => $title, 'description' => $description, 'deadline' => $deadline, 'status' => 'active'));
         return redirect()->back();

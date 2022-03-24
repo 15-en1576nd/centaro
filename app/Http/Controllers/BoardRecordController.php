@@ -37,7 +37,7 @@ class BoardRecordController extends Controller
      * @param  \App\Http\Requests\StoreBoardRecordRequest  $request
      * @return \Illuminate\Http\Response
      */
-   public function store($board, StoreBoardRecordRequest $request)
+   public function store(Board $board, StoreBoardRecordRequest $request)
    {
        $type = $request->type;
        $value = $request->value;
@@ -46,7 +46,6 @@ class BoardRecordController extends Controller
        $category_id = $request->category;
 
        if ($type == "-" || $type == "+" && $value && $title && $description) { //Validation (Will be replaced with requestprovider)
-           $board = Board::findOrFail($board);
            BoardRecord::create(array('user_id' => Auth::user()->id, 'board_id' => $board->id, 'category_id' => $category_id, 'type' => $type, 'value' => $value, 'title' => $title, 'description' => $description));
            //FIX!!!!!!!
        }
