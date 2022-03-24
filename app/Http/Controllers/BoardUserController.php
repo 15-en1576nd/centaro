@@ -56,7 +56,7 @@ class BoardUserController extends Controller
         if($userboard === null && $board->type == 'team') {
             $board->users()->attach('board_id', array('user_id' => $id,'role_id' => 1));
         } elseif(!$board->id) {
-            return redirect('/boards');
+            return redirect('/dashboard/boards');
         }
         return redirect()->back();
 
@@ -114,6 +114,6 @@ class BoardUserController extends Controller
 
             $board->users()->wherePivot('user_id', '=', $user->id)->detach();
         }
-        return redirect('/boards/' . $board->id . '/users');
+        return redirect('/dashboard/boards/' . $board->id . '/users');
     }
 }

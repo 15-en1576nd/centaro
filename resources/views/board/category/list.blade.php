@@ -1,8 +1,9 @@
-<a href="/boards/{{$board->id}}">
-    <button>terug</button>
-</a>
-<div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
-    <form method="post">
+@extends('parts.board')
+@section('title', 'Boards')
+@section('content')
+<h1 class="text-4xl">Board Categories</h1>
+<div class="p-2 m-1 border-2 rounded-md border-zinc-900">
+    <form class="text-gray-900" method="post">
         @csrf
 
         <input type="text" name="name" placeholder="Name">
@@ -11,17 +12,17 @@
                 <option value="{{$color->id}}" style="background: {{ $color->code }}; color: white">{{$color->name}}</option>
             @endforeach
         </select>
-        <input type="submit" value="add">
+        <button class="p-2 text-white rounded-md bg-zinc-900" type="submit">Add</button>
 
     </form>
 </div>
 <br><br>
-<div style="width: 80%; flex-direction: row; display: flex">
+<div class="flex flex-row justify-center w-1/5">
 @foreach($board->categories->sortByDesc('created_at') as $category)
-    <div style="display: flex;margin-inline: 4%; width: max-content; font-weight: bold; border-radius: 8%; border: 0.5px black solid; padding: 4px; display: flex; color: white; background: {{$category->color->code}}">
-
+    <div class="flex items-center p-2 text-center rounded-md" style="background: {{$category->color->code}};">
        {{$category->name}}
     </div>
 
 @endforeach
 </div>
+@endsection
