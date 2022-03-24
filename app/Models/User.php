@@ -50,7 +50,8 @@ class User extends Authenticatable
     }
 
     public function role() {
-        return $this->belongsToMany(Role::class, 'board_user_roles', 'role_id');
+        $relation = $this->belongsToMany(Role::class, 'board_user_roles', 'user_id')->wherePivot('board_id','=',$this->pivot->board_id);
+        return $relation;
     }
 
 
