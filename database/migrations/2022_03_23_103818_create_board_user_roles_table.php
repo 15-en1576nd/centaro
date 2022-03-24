@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('board_user_roles', function (Blueprint $table) {
-            $table->foreignKey('board_id');
-            $table->foreignKey('user_id');
-            $table->foreignKey('role_id');
+            $table->unsignedBigInteger('board_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('role_id');
         });
     }
 
