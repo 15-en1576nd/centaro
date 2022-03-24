@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    public function board_users() {
-        return $this->belongsToMany(User::class, 'board_users', 'board_role_id');
+    public function users() {
+        return $this->belongsToMany(User::class, 'board_user_roles', 'role_id');
     }
-    public function permissions() {
-        return $this->belongsToMany(Permission::class, 'permission_role', 'role_id');
+    public function color() {
+        return $this->belongsTo(Color::class, 'color_id');
     }
+
+
 }

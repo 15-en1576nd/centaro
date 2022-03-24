@@ -13,7 +13,8 @@ class Board extends Model
         'type',
     ];
     public function users() {
-        return $this->belongsToMany(User::class, 'board_users', 'board_id');
+        return $this->belongsToMany(User::class, 'board_user_roles')->withPivot('role_id');
+
     }
     public function records() {
         return $this->hasMany(BoardRecord::class, 'board_id', 'id');

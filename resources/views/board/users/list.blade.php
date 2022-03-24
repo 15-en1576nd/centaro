@@ -13,7 +13,6 @@
     {{$user->name}}
     {{$user->surname}}
     <form method="post" action="/dashboard/boards/{{$board->id}}/users/{{$user->id}}">
-
         <p>
         @method('DELETE')
         @csrf
