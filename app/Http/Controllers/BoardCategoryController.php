@@ -17,7 +17,7 @@ class BoardCategoryController extends Controller
      */
     public function index(Board $board)
     {
-        $colors = color::all();
+        $colors = color::all(); //Get all colors
 
         return view('board.category.list', ['board' => $board, 'colors' => $colors]);
     }
