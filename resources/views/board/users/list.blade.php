@@ -9,7 +9,7 @@
 
     {{$user->name}}
     {{$user->surname}}
-    {{$user->role}}
+    Role: {{$user->role->first()->name}}
     <form method="post" action="/boards/{{$board->id}}/users/{{$user->id}}">
         <p>
         @method('DELETE')
