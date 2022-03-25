@@ -45,13 +45,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function boards() {
+    public function boards() { //Get all user boards
         return $this->belongsToMany(Board::class, 'board_user_roles', 'user_id');
     }
 
     public function role() {
-        $relation = $this->belongsToMany(Role::class, 'board_user_roles', 'user_id')->wherePivot('board_id','=',$this->pivot->board_id);
-        return $relation;
+        //Returns local role of user in board. Get pivot user_id to connect to user then filter on board by given board_id in pivot.
+       return $this->belongsToMany(Role::class, 'board_user_roles', 'user_id')->wherePivot('board_id','=',$this->pivot->board_id);
+
     }
 
 

@@ -17,14 +17,15 @@ class BoardRecord extends Model
         'user_id',
         'category_id',
         'attachment',
+
     ];
-    public function board() {
+    public function board() { 
         return $this->hasOne(Board::class, 'id', 'board_id');
     }
-    public function user() {
+    public function user() { //Get author of record
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function category() {
+    public function category() { //Get category of record
         return $this->hasOne(BoardCategory::class, 'id', 'category_id');
     }
 }

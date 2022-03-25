@@ -69,7 +69,7 @@ class BoardController extends Controller
                 $totalspendings += $record->value;
             }
             $singlerecord = $record->type . $record->value;
-            $total += (float)$singlerecord;
+            $total += (float)$singlerecord; //Calculates total board value
         }
 
 
@@ -107,10 +107,10 @@ class BoardController extends Controller
      */
     public function destroy(Board $board)
     {
-        $board->users()->detach();
-        $board->records()->delete();
-        $board->categories()->delete();
-        $board->delete();
+        $board->users()->detach(); //Detach all users from board
+        $board->records()->delete(); //Detach all records from board
+        $board->categories()->delete(); //Detach all categories from board
+        $board->delete(); //Delete board from table
         return redirect('/dashboard/boards');
     }
 }
