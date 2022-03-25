@@ -44,16 +44,16 @@ class BoardUserController extends Controller
      */
     public function store(StoreBoardUserRequest $request, Board $board)
     {
-        $emailcheck = User::where('email', '=', $request->email)->exists();
+        $emailcheck = User::where('email', '=', $request->email)->exists(); //Checks if email has account
 
-        if (!$request->email || $emailcheck === false) {
+        if (!$request->email || $emailcheck === false) { //If account doesnt exist
             return redirect()->back(); // WITH ERROR
         }
 
         $id = User::where('email', $request->email)->first()->id;
         $userboard = User::find($id)->boards->find($board->id);
 
-        if($userboard === null && $board->type == 'team') {
+        if($userboard === null && $board->type == 'team') { //Check if board type accept multiple users & User not already in board
             $board->users()->attach('board_id', array('user_id' => $id,'role_id' => 1));
         } elseif(!$board->id) {
             return redirect('/dashboard/boards');
@@ -107,10 +107,10 @@ class BoardUserController extends Controller
 
 
 
-        $roleid = BoardUser::where('user_id', $user->id)->first()->board_role_id;
+        $role = BoardUser::find($user->id)->role->first()->name; //Get role name of user
 
 
-        if (Auth::user()->id != $user->id && $roleid != 99) {
+        if (Auth::user()->id != $user->id && $role != 'admin') { //Check if user doesnt delete it self
 
             $board->users()->wherePivot('user_id', '=', $user->id)->detach();
         }
