@@ -25,9 +25,9 @@
     <br><br>
     <div class="flex flex-wrap flex-row justify-center">
         @forelse($board->savingtargets as $savingtarget)
-            <div class="w-1/4 flex-wrap m-3 p-4 text-gray-900 bg-white border-l-4 border-green-400 rounded-lg">
+            <div class="w-1/4 flex-wrap m-3 p-4 text-gray-900 bg-white border-l-4 border-{{$savingtarget->color->class}} rounded-lg">
                 <div class="flex items-center">
-                    <div class="icon w-14 p-3.5 bg-green-400 text-white rounded-full mr-3">
+                    <div class="icon w-14 p-3.5 bg-{{$savingtarget->color->class}} text-white rounded-full mr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                              stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -37,7 +37,12 @@
                     <div class="flex flex-col justify-center">
                         <div class="text-lg">{{$savingtarget->name}}</div>
                         <div class="text-sm text-emerald-500">Goal: €{{$savingtarget->value}}</div>
-                        <div class="text-sm text-red-500">To go: €{{$savingtarget->value - $total}}</div>
+                        <div class="text-sm text-red-500">To go: @if($savingtarget->value > $total)
+                                €{{$savingtarget->value - $total}}
+                            @else
+                                €0
+
+                            @endif </div>
 
                         <div
                             class="text-sm text-gray-500">@if((new DateTime()) < (new DateTime($savingtarget->deadline)))
@@ -48,6 +53,9 @@
 
                                 The deadline passed {{$daycount = (new DateTime())->diff(new DateTime($savingtarget->deadline))->days}} @if($daycount > 1 )days @else day @endif ago!
                             @endif
+                            <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                                <div class="bg-{{$savingtarget->color->class}} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: 45%"> 45%</div>
+                            </div>
                         </div>
                     </div>
 
