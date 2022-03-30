@@ -48,13 +48,24 @@ class BoardSavingTargetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Board $board, StoreBoardSavingTargetRequest $request)
-    {   $color = $request->color;
+    {
+        //Get all request data
+        $color = $request->color;
         $value = $request->value;
         $title = $request->title;
         $description = $request->description;
         $deadline = $request->deadline; //Deadline date
 
-        BoardSavingTarget::create(array('color_id' => $color, 'user_id' => Auth::user()->id,'board_id' => $board->id,'value' => $value, 'name' => $title, 'description' => $description, 'deadline' => $deadline, 'status' => 'active'));
+        //Create new saving target
+        $savingtarget = new BoardSavingTarget;
+        $savingtarget->board_id = $board->id;
+        $savingtarget->color_id = $color;
+        $savingtarget->value = $value;
+        $savingtarget->title = $title;
+        $savingtarget->description = $description;
+        $savingtarget->deadline = $deadline;
+        $savingtarget->save();
+
         return redirect()->back();
     }
 
