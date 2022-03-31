@@ -59,11 +59,13 @@ class BoardSavingTargetController extends Controller
         //Create new saving target
         $savingtarget = new BoardSavingTarget;
         $savingtarget->board_id = $board->id;
+        $savingtarget->user_id = Auth::user()->id;
         $savingtarget->color_id = $color;
         $savingtarget->value = $value;
-        $savingtarget->title = $title;
+        $savingtarget->name = $title;
         $savingtarget->description = $description;
         $savingtarget->deadline = $deadline;
+        $savingtarget->status = 'active';
         $savingtarget->save();
 
         return redirect()->back();
@@ -75,9 +77,9 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Models\BoardSavingTarget  $boardSavingTarget
      * @return \Illuminate\Http\Response
      */
-    public function show(BoardSavingTarget $boardSavingTarget)
+    public function show(Board $board, BoardSavingTarget $boardsavingtarget)
     {
-        //
+        return view('board.savingtargets.view', ['board' => $board, 'savingtarget' => $boardsavingtarget]);
     }
 
     /**
