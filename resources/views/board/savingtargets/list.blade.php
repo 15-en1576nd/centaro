@@ -36,7 +36,9 @@
                         </svg>
                     </div>
                     <div class="flex flex-col justify-center w-full">
-                        <div class="text-lg">{{$savingtarget->name}}</div>
+                        <div class="text-lg hover:underline cursor-pointer">
+                            <a href="{{ route('boards.savingtargets.show', ['board' => $board, 'boardsavingtarget' => $savingtarget->id])}}">{{$savingtarget->name}}</a>
+                        </div>
                         <div class="text-sm text-emerald-500">Goal: €{{$savingtarget->value}}</div>
                         <div class="text-sm text-red-500">To go: @if($savingtarget->value > $total)
                                 €{{$savingtarget->value - $total}}
@@ -51,20 +53,19 @@
                                 over: {{$daycount = (new DateTime())->diff(new DateTime($savingtarget->deadline))->days}} @if($daycount > 1 )
                                     days @else day @endif
                             @elseif((new DateTime())->diff(new DateTime($savingtarget->deadline))->days = 0 )
-                                The deadline has passed today!
+                                Passed today!
                             @else
 
-                                The deadline
-                                passed {{$daycount = (new DateTime())->diff(new DateTime($savingtarget->deadline))->days}} @if($daycount > 1 )
+
+                                Passed {{$daycount = (new DateTime())->diff(new DateTime($savingtarget->deadline))->days}} @if($daycount > 1 )
                                     days @else day @endif ago!
                             @endif
-
                         </div>
-                        <div class="relative flex align-bottom w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                        <div class="relative flex bottom w-full bg-gray-200 rounded-full dark:bg-gray-700">
                             <div
                                 style="width: @if($total < $savingtarget->value){{$progress = floor($total / $savingtarget->value * 100)}}@else{{$progress = 100}}@endif%"
                                 class="absolute bg-blue-600 text-xs font-medium text-blue-100 text-center p-3 leading-none rounded-full"
-                                >
+                            >
 
                             </div>
                             <div class="z-10 relative w-full outline outline-white text-center">{{$progress}}%</div>
@@ -79,6 +80,7 @@
             <div
                 style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row; justify-content: center; color: gray">
                 <p>No savingtargets found!</p>
+
             </div>
         @endforelse
     </div>
