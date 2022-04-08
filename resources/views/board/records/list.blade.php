@@ -2,7 +2,7 @@
 @section('title', 'Boards')
 @section('content')
 <div class="flex p-3 rounded-md justify-centerw-3/4 bg-zinc-900">
-    <a class="p-2 transition rounded-md bg-emerald-700 hover:bg-emerald-600" href="/dashboard/boards/{{$board->id}}/category"><button>Categories</button></a>
+    <a class="p-2 transition rounded-md bg-emerald-700 hover:bg-emerald-600" href="/dashboard/boards/{{$board->id}}/categories"><button>Categories</button></a>
 </div>
 <div class="flex flex-row justify-center p-2 mt-3 rounded-md bg-zinc-900">
     <form method="post">
