@@ -15,7 +15,7 @@
             @foreach($board->categories as $category)
                 <option value="{{$category->id}}" style="background: {{$category->color->hexcode}}">{{$category->name}}</option>
             @endforeach
-            <option onclick="location.href=('/boards/{{$board->id}}/category')">Create</option>
+            <option onclick="location.href=('/boards/{{$board->id}}/categories')">Create</option>
         </select>
         <input class="text-gray-900 placeholder-gray-600" type="number" step="0.1" name="value" placeholder="Amount. 10">
         <input class="text-gray-900 placeholder-gray-600" type="text" name="title" placeholder="Title">
