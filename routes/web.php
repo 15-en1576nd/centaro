@@ -28,7 +28,7 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('boards.categories', \App\Http\Controllers\BoardCategoryController::class);
     Route::resource('boards.savingtargets', \App\Http\Controllers\BoardSavingTargetController::class, [
         'parameters' => ['savingtargets' => 'boardsavingtarget']
-    ]);;
+    ]);
 });
 });
 // Authentication Routes...
