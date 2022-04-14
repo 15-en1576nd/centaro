@@ -17,6 +17,7 @@ class BoardSavingTarget extends Model
         'value',
         'status',
         'deadline',
+        'attachment',
         ];
 
     public function board() {
