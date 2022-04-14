@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->float('value');
             $table->string('attachment')->nullable();
+            $table->string('type');
+            $table->json('type_attributes')->nullable();
             $table->string('status');
             $table->date('deadline');
             $table->timestamps();
