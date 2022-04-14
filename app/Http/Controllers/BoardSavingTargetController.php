@@ -36,9 +36,10 @@ class BoardSavingTargetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Board $board)
     {
-        //
+        $icons = icon::all();
+        return view('board.savingtargets.create', ['board' => $board, 'icons' => $icons]);
     }
 
     /**
@@ -60,7 +61,11 @@ class BoardSavingTargetController extends Controller
         $savingtarget = new BoardSavingTarget;
         $savingtarget->board_id = $board->id;
         $savingtarget->user_id = Auth::user()->id;
-        $savingtarget->color_id = $color;
+        if (empty($icon)) {
+            $savingtarget->icon_id = 1;
+        } else {
+            $savingtarget->icon_id = $icon;
+        }
         $savingtarget->value = $value;
         $savingtarget->name = $title;
         $savingtarget->description = $description;

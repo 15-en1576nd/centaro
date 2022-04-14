@@ -29,4 +29,8 @@ class BoardSavingTarget extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function icon() {
+        return $this->belongsTo(Icon::class, 'icon_id');
+    }
+
 }
