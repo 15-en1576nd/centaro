@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Icon;
 use App\Models\Board;
 use App\Models\BoardSavingTarget;
 use App\Http\Requests\StoreBoardSavingTargetRequest;
@@ -27,6 +27,7 @@ class BoardSavingTargetController extends Controller
                 $total -= $record->value;
             }
         }
+
 
         return view('board.savingtargets.list', ['board' => $board, 'colors' => $colors, 'total' => $total]);
     }
@@ -56,6 +57,15 @@ class BoardSavingTargetController extends Controller
         $title = $request->title;
         $description = $request->description;
         $deadline = $request->deadline; //Deadline date
+        $attachment = $request->attachment; //Attachment
+        if ($attachment) {
+            if(strstr($attachment,'.',true)!=='www' && strstr($attachment, '://', true)!=='https'){
+                $attachment = 'https://www.'.$attachment;
+            } elseif (strstr($attachment, '://', true)!=='https') {
+                $attachment = 'https://'.$attachment;
+            }
+        }
+
 
         //Create new saving target
         $savingtarget = new BoardSavingTarget;
@@ -71,6 +81,7 @@ class BoardSavingTargetController extends Controller
         $savingtarget->description = $description;
         $savingtarget->deadline = $deadline;
         $savingtarget->status = 'active';
+        $savingtarget->attachment = $attachment;
         $savingtarget->save();
 
         return redirect()->back();
