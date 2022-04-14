@@ -52,9 +52,11 @@ class BoardSavingTargetController extends Controller
     public function store(Board $board, StoreBoardSavingTargetRequest $request)
     {
         //Get all request data
-        $color = $request->color;
+
+
+        $icon = $request->icon;
         $value = $request->value;
-        $title = $request->title;
+        $title = $request->name;
         $description = $request->description;
         $deadline = $request->deadline; //Deadline date
         $attachment = $request->attachment; //Attachment
@@ -147,8 +149,9 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Models\BoardSavingTarget  $boardSavingTarget
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BoardSavingTarget $boardSavingTarget)
+    public function destroy(Board $board, BoardSavingTarget $boardsavingtarget)
     {
-        //
+        $boardsavingtarget->delete();
+       return redirect('/dashboard/boards/'.$board->id.'/savingtargets');
     }
 }
