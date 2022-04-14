@@ -95,6 +95,26 @@ class BoardSavingTargetController extends Controller
      */
     public function show(Board $board, BoardSavingTarget $boardsavingtarget)
     {
+        //board total
+        $boardsavingtarget->total = 0;
+        foreach ($board->records as $record) { //Get total board value
+            if ($record->type === '+') {
+                $boardsavingtarget->total += $record->value;
+            } elseif ($record->type === '-') {
+                $boardsavingtarget->total -= $record->value;
+            }
+        }
+
+        $date1 = new \DateTime($boardsavingtarget->created_at);
+        $date2 = new \DateTime($boardsavingtarget->deadline);
+        $interval = $date1->diff($date2)->days;
+        $boardsavingtarget->interval = $interval;
+        //count days between now and deadline
+        $now = new \DateTime();
+        $deadline = new \DateTime($boardsavingtarget->deadline);
+        $diff = $now->diff($deadline);
+        $boardsavingtarget->countdown = $diff->format('%a');
+
         return view('board.savingtargets.view', ['board' => $board, 'savingtarget' => $boardsavingtarget]);
     }
 
