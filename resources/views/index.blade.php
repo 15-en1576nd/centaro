@@ -20,4 +20,10 @@
         </div>
     </div>
 </div>
+<div class="flex justify-center py-64 text-emerald-600">
+    <div class="w-7/12">
+        <h1 class="text-6xl">Centaro</h1>
+        <h1 class="text-4xl">Manage your wallet on the way!</h1>
+    </div>
+</div>
 @endsection
