@@ -10,6 +10,7 @@
     <meta property="og:url" content="/">
     <meta property="og:description" content="Centaro is a smallsize accountancy website.">
     <meta name="theme-color" content="#05A8AA">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <!-- end of metadata -->
 </head>
 <body class="font-outfit">
@@ -28,7 +29,7 @@
             <span class="ml-2">Transactions</span>
           </a>
           <a class="flex items-center px-4 py-2 m-2 transition rounded-md cursor-pointer group hover:bg-emerald-700 hover:text-gray-200" href="/dashboard/boards/{{$board->id}}/users">
-            <svg class="h-6 w-6"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />  <circle cx="9" cy="7" r="4" />  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />  <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+            <svg class="w-6 h-6"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />  <circle cx="9" cy="7" r="4" />  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />  <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
              <span class="ml-2">Users</span>
           </a>
           <a class="flex items-center px-4 py-2 m-2 transition rounded-md cursor-pointer group hover:bg-emerald-700 hover:text-gray-200" href="/account/view">
