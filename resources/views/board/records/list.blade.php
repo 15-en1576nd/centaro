@@ -90,7 +90,7 @@
         </div>
     </div>
 </div>
-<div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row; font-weight: bold">
+<div class="flex flex-row p-2 my-3 rounded-md bg-zinc-900">
 <div style="width: 100%;">Amount</div>
 <div style="width: 100%;">Category</div>
 <div style="width: 100%;">Title</div>
