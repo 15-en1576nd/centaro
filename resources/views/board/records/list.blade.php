@@ -98,14 +98,13 @@
 <div style="width: 25%;">User</div>
 </div>
 @forelse($board->records->sortByDesc('created_at') as $record)
-    <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row">
-
-        <div style="width: 100%; font-weight: bold;" class="@if($record->type == "-") text-red-500 @elseif($record->type == "+") text-green-500 @endif">{{$record->type . '€' . $record->value}},-</div>
-        <div style="width: 100%; color: {{$record->category->color->code}}">{{$record->category->name}}</div>
-        <div style="width: 100%; flex-wrap: wrap; font-weight: lighter">{{$record->title}}</div>
-        <div style="width: 50%">{{$record->created_at->format('d/m/Y')}}</div>
-        <div style="width: 25%">{{$record->user->name}}</div>
-    </div>
+<div class="border-l-4 my-2 bg-zinc-900 rounded-md flex flex-row p-2 @if($record->type == "-") border-red-500 @elseif($record->type == "+") border-green-500 @endif">
+    <div style="width: 100%; font-weight: bold;" class="@if($record->type == "-") text-red-500 @elseif($record->type == "+") text-green-500 @endif">{{$record->type . '€' . $record->value}},-</div>
+    <div style="width: 100%; color: {{$record->category->color->code}}">{{$record->category->name}}</div>
+    <div style="width: 100%; flex-wrap: wrap; font-weight: lighter">{{$record->title}}</div>
+    <div style="width: 50%">{{$record->created_at->format('d/m/Y')}}</div>
+    <div style="width: 25%">{{$record->user->name}}</div>
+</div>
 @empty
     <div style="border: 0.5px black solid; padding: 2px; display: flex; flex-direction: row; justify-content: center; color: gray">
         <p>No transactions found.</p>
