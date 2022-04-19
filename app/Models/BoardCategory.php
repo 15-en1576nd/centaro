@@ -20,6 +20,6 @@ class BoardCategory extends Model
         return $this->hasOne(color::class, 'id', 'color_id');
     }
     public function records() {
-        return $this->hasMany(Record::class, 'category_id', 'id');
+        return $this->hasMany(BoardRecord::class, 'category_id', 'id');
     }
 }
