@@ -20,6 +20,10 @@ class BoardSavingTarget extends Model
         'attachment',
         ];
 
+    protected $casts = [
+        'type_attributes' => 'array',
+    ];
+
     public function board() {
        return $this->belongsTo(Board::class, 'board_id');
     }
