@@ -57,6 +57,7 @@ class BoardSavingTargetController extends Controller
         $icon = $request->icon;
         $value = $request->value;
         $title = $request->name;
+        $type = $request->type;
         $description = $request->description;
         $deadline = $request->deadline; //Deadline date
         $attachment = $request->attachment; //Attachment
@@ -66,6 +67,12 @@ class BoardSavingTargetController extends Controller
             } elseif (strstr($attachment, '://', true)!=='https') {
                 $attachment = 'https://'.$attachment;
             }
+        }
+
+        if ($type === 'auto') {
+            $percentage = $request->amountRange;
+            $categories = $request->category;
+            $attributes = ['percentage' => $percentage, 'categories' => $categories];
         }
 
 
@@ -78,6 +85,8 @@ class BoardSavingTargetController extends Controller
         } else {
             $savingtarget->icon_id = $icon;
         }
+        $savingtarget->type = $type;
+        $savingtarget->type_attributes = $attributes;
         $savingtarget->value = $value;
         $savingtarget->name = $title;
         $savingtarget->description = $description;
@@ -115,6 +124,8 @@ class BoardSavingTargetController extends Controller
         $now = new \DateTime();
         $deadline = new \DateTime($boardsavingtarget->deadline);
         $diff = $now->diff($deadline);
+        $boardsavingtarget->type_attributes = $boardsavingtarget->type_attributes;
+
         $boardsavingtarget->countdown = $diff->format('%a');
 
         return view('board.savingtargets.view', ['board' => $board, 'savingtarget' => $boardsavingtarget]);
