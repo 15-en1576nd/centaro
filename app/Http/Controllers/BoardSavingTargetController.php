@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\BoardCategory;
 use App\Models\Icon;
 use App\Models\Board;
 use App\Models\BoardSavingTarget;
@@ -54,7 +55,7 @@ class BoardSavingTargetController extends Controller
         }
 
 
-        return view('board.savingtargets.list', ['board' => $board, 'colors' => $colors, 'total' => $total]);
+        return view('board.savingtargets.list', ['board' => $board, 'colors' => $colors]);
     }
 
     /**
@@ -98,6 +99,8 @@ class BoardSavingTargetController extends Controller
             $percentage = $request->amountRange;
             $categories = $request->category;
             $attributes = ['percentage' => $percentage, 'categories' => $categories];
+        } else {
+            $attributes = null;
         }
 
 
@@ -120,7 +123,7 @@ class BoardSavingTargetController extends Controller
         $savingtarget->attachment = $attachment;
         $savingtarget->save();
 
-        return redirect()->back();
+        return redirect('/dashboard/boards/' . $board->id . '/savingtargets/' . $savingtarget->id);
     }
 
     /**
@@ -133,14 +136,36 @@ class BoardSavingTargetController extends Controller
     {
         //board total
         $boardsavingtarget->total = 0;
-        foreach ($board->records as $record) { //Get total board value
-            if ($record->type === '+') {
-                $boardsavingtarget->total += $record->value;
-            } elseif ($record->type === '-') {
-                $boardsavingtarget->total -= $record->value;
+        if ($boardsavingtarget->type == 'auto' && $boardsavingtarget->type_attributes['categories'] != null) {
+            foreach ($boardsavingtarget->type_attributes['categories'] as $category) {
+                $category = BoardCategory::findorfail($category);
+
+                foreach ($category->records as $record) {
+                    if ($record->type == '+') {
+                        $boardsavingtarget->total += $record->value;
+                    } else {
+                        $boardsavingtarget->total -= $record->value;
+                    }
+                }
+                $boardsavingtarget->total = $boardsavingtarget->total * ($boardsavingtarget->type_attributes['percentage'] / 100);
+            }
+        } elseif($boardsavingtarget->type == 'manual') {
+            foreach ($boardsavingtarget->records as $record) {
+                if ($record->type == '+') {
+                    $boardsavingtarget->total += $record->value;
+                } else {
+                    $boardsavingtarget->total -= $record->value;
+                }
+            }
+        } else {
+            foreach ($board->records as $record) {
+                if ($record->type == '+') {
+                    $boardsavingtarget->total += $record->value;
+                } else {
+                    $boardsavingtarget->total -= $record->value;
+                }
             }
         }
-
         $date1 = new \DateTime($boardsavingtarget->created_at);
         $date2 = new \DateTime($boardsavingtarget->deadline);
         $interval = $date1->diff($date2)->days;
@@ -149,7 +174,7 @@ class BoardSavingTargetController extends Controller
         $now = new \DateTime();
         $deadline = new \DateTime($boardsavingtarget->deadline);
         $diff = $now->diff($deadline);
-        $boardsavingtarget->type_attributes = $boardsavingtarget->type_attributes;
+
 
         $boardsavingtarget->countdown = $diff->format('%a');
 
@@ -174,9 +199,10 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Models\BoardSavingTarget  $boardSavingTarget
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBoardSavingTargetRequest $request, BoardSavingTarget $boardSavingTarget)
+    public function update(UpdateBoardSavingTargetRequest $request, Board $board, BoardSavingTarget $boardsavingtarget)
     {
-        //
+        $boardsavingtarget->update($request->all());
+        return redirect()->back();
     }
 
     /**
