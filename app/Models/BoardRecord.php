@@ -17,9 +17,10 @@ class BoardRecord extends Model
         'user_id',
         'category_id',
         'attachment',
-
+        'savingtarget_id',
+        'hidden',
     ];
-    public function board() { 
+    public function board() {
         return $this->hasOne(Board::class, 'id', 'board_id');
     }
     public function user() { //Get author of record
