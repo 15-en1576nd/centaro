@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\BoardCategory;
+use App\Models\Icon;
 use App\Models\Board;
 use App\Models\BoardSavingTarget;
 use App\Http\Requests\StoreBoardSavingTargetRequest;
@@ -19,16 +20,42 @@ class BoardSavingTargetController extends Controller
     public function index(Board $board)
     {
         $colors = color::all();
-        $total = 0;
-        foreach ($board->records as $record) { //Get total board value
-            if ($record->type === '+') {
-                $total += $record->value;
-            } elseif ($record->type === '-') {
-                $total -= $record->value;
+        foreach ($board->savingtargets as $boardsavingtarget) { //Get total foreach savingtarget
+            $boardsavingtarget->total = 0;
+            if ($boardsavingtarget->type == 'auto' && $boardsavingtarget->type_attributes['categories'] != null) {
+                foreach ($boardsavingtarget->type_attributes['categories'] as $category) {
+                    $category = BoardCategory::findorfail($category);
+
+                    foreach ($category->records as $record) {
+                        if ($record->type == '+') {
+                            $boardsavingtarget->total += $record->value;
+                        } else {
+                            $boardsavingtarget->total -= $record->value;
+                        }
+                    }
+                    $boardsavingtarget->total = $boardsavingtarget->total * ($boardsavingtarget->type_attributes['percentage'] / 100);
+                }
+            } elseif($boardsavingtarget->type == 'manual') {
+                foreach ($boardsavingtarget->records as $record) {
+                    if ($record->type == '+') {
+                        $boardsavingtarget->total += $record->value;
+                    } else {
+                        $boardsavingtarget->total -= $record->value;
+                    }
+                }
+            } else {
+                foreach ($board->records as $record) {
+                    if ($record->type == '+') {
+                        $boardsavingtarget->total += $record->value;
+                    } else {
+                        $boardsavingtarget->total -= $record->value;
+                    }
+                }
             }
         }
 
-        return view('board.savingtargets.list', ['board' => $board, 'colors' => $colors, 'total' => $total]);
+
+        return view('board.savingtargets.list', ['board' => $board, 'colors' => $colors]);
     }
 
     /**
@@ -36,9 +63,10 @@ class BoardSavingTargetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Board $board)
     {
-        //
+        $icons = icon::all();
+        return view('board.savingtargets.create', ['board' => $board, 'icons' => $icons]);
     }
 
     /**
@@ -48,14 +76,54 @@ class BoardSavingTargetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Board $board, StoreBoardSavingTargetRequest $request)
-    {   $color = $request->color;
+    {
+        //Get all request data
+
+
+        $icon = $request->icon;
         $value = $request->value;
-        $title = $request->title;
+        $title = $request->name;
+        $type = $request->type;
         $description = $request->description;
         $deadline = $request->deadline; //Deadline date
+        $attachment = $request->attachment; //Attachment
+        if ($attachment) {
+            if(strstr($attachment,'.',true)!=='www' && strstr($attachment, '://', true)!=='https'){
+                $attachment = 'https://www.'.$attachment;
+            } elseif (strstr($attachment, '://', true)!=='https') {
+                $attachment = 'https://'.$attachment;
+            }
+        }
 
-        BoardSavingTarget::create(array('color_id' => $color, 'user_id' => Auth::user()->id,'board_id' => $board->id,'value' => $value, 'name' => $title, 'description' => $description, 'deadline' => $deadline, 'status' => 'active'));
-        return redirect()->back();
+        if ($type === 'auto') {
+            $percentage = $request->amountRange;
+            $categories = $request->category;
+            $attributes = ['percentage' => $percentage, 'categories' => $categories];
+        } else {
+            $attributes = null;
+        }
+
+
+        //Create new saving target
+        $savingtarget = new BoardSavingTarget;
+        $savingtarget->board_id = $board->id;
+        $savingtarget->user_id = Auth::user()->id;
+        if (empty($icon)) {
+            $savingtarget->icon_id = 1;
+        } else {
+            $savingtarget->icon_id = $icon;
+        }
+        $savingtarget->type = $type;
+        $savingtarget->type_attributes = $attributes;
+        $savingtarget->value = $value;
+        $savingtarget->name = $title;
+        $savingtarget->description = $description;
+        $savingtarget->deadline = $deadline;
+        $savingtarget->status = 'active';
+        $savingtarget->attachment = $attachment;
+        $savingtarget->save();
+
+        return redirect('/dashboard/boards/' . $board->id . '/savingtargets/' . $savingtarget->id);
     }
 
     /**
@@ -64,9 +132,53 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Models\BoardSavingTarget  $boardSavingTarget
      * @return \Illuminate\Http\Response
      */
-    public function show(BoardSavingTarget $boardSavingTarget)
+    public function show(Board $board, BoardSavingTarget $boardsavingtarget)
     {
-        //
+        //board total
+        $boardsavingtarget->total = 0;
+        if ($boardsavingtarget->type == 'auto' && $boardsavingtarget->type_attributes['categories'] != null) {
+            foreach ($boardsavingtarget->type_attributes['categories'] as $category) {
+                $category = BoardCategory::findorfail($category);
+
+                foreach ($category->records as $record) {
+                    if ($record->type == '+') {
+                        $boardsavingtarget->total += $record->value;
+                    } else {
+                        $boardsavingtarget->total -= $record->value;
+                    }
+                }
+                $boardsavingtarget->total = $boardsavingtarget->total * ($boardsavingtarget->type_attributes['percentage'] / 100);
+            }
+        } elseif($boardsavingtarget->type == 'manual') {
+            foreach ($boardsavingtarget->records as $record) {
+                if ($record->type == '+') {
+                    $boardsavingtarget->total += $record->value;
+                } else {
+                    $boardsavingtarget->total -= $record->value;
+                }
+            }
+        } else {
+            foreach ($board->records as $record) {
+                if ($record->type == '+') {
+                    $boardsavingtarget->total += $record->value;
+                } else {
+                    $boardsavingtarget->total -= $record->value;
+                }
+            }
+        }
+        $date1 = new \DateTime($boardsavingtarget->created_at);
+        $date2 = new \DateTime($boardsavingtarget->deadline);
+        $interval = $date1->diff($date2)->days;
+        $boardsavingtarget->interval = $interval;
+        //count days between now and deadline
+        $now = new \DateTime();
+        $deadline = new \DateTime($boardsavingtarget->deadline);
+        $diff = $now->diff($deadline);
+
+
+        $boardsavingtarget->countdown = $diff->format('%a');
+
+        return view('board.savingtargets.view', ['board' => $board, 'savingtarget' => $boardsavingtarget]);
     }
 
     /**
@@ -87,9 +199,10 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Models\BoardSavingTarget  $boardSavingTarget
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBoardSavingTargetRequest $request, BoardSavingTarget $boardSavingTarget)
+    public function update(UpdateBoardSavingTargetRequest $request, Board $board, BoardSavingTarget $boardsavingtarget)
     {
-        //
+        $boardsavingtarget->update($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -98,8 +211,9 @@ class BoardSavingTargetController extends Controller
      * @param  \App\Models\BoardSavingTarget  $boardSavingTarget
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BoardSavingTarget $boardSavingTarget)
+    public function destroy(Board $board, BoardSavingTarget $boardsavingtarget)
     {
-        //
+        $boardsavingtarget->delete();
+       return redirect('/dashboard/boards/'.$board->id.'/savingtargets');
     }
 }

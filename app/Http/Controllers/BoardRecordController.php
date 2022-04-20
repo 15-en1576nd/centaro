@@ -44,10 +44,21 @@ class BoardRecordController extends Controller
        $title = $request->title;
        $description = $request->description;
        $category_id = $request->category;
+       if (!$category_id) {
+           $category_id = 1;
+       }
+       $hidden = $request->hidden;
+       if (!$hidden) {
+               $hidden = true;
+           } else {
+               $hidden = false;
+           }
+           if (!$title) {
+               $title = 'savingtarget' . $request->savingtarget_id;
+           }
 
-       if ($type == "-" || $type == "+" && $value && $title && $description) { //Validation (Will be replaced with requestprovider)
-           BoardRecord::create(array('user_id' => Auth::user()->id, 'board_id' => $board->id, 'category_id' => $category_id, 'type' => $type, 'value' => $value, 'title' => $title, 'description' => $description));
-           //FIX!!!!!!!
+       if ($type == "-" || $type == "+" && $value && $title) { //Validation (Will be replaced with requestprovider)
+           BoardRecord::create(array('user_id' => Auth::user()->id, 'board_id' => $board->id, 'category_id' => $category_id, 'type' => $type, 'value' => $value, 'title' => $title, 'description' => $description, 'hidden' => $hidden, 'savingtarget_id' => $request->savingtarget));
        }
        return redirect()->back();
    }
@@ -81,7 +92,7 @@ class BoardRecordController extends Controller
      * @param  \App\Models\BoardRecord  $boardRecord
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBoardRecordRequest $request, BoardRecord $boardRecord)
+    public function update(UpdateBoardRecordRequest $request, Board $board, BoardRecord $record)
     {
         //
     }
@@ -89,11 +100,12 @@ class BoardRecordController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BoardRecord  $boardRecord
+     * @param  \App\Models\BoardRecord $record
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BoardRecord $boardRecord)
+    public function destroy(Board $board, BoardRecord $record)
     {
-        //
+        $record->delete();
+        return redirect()->back();
     }
 }

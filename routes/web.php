@@ -25,7 +25,11 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('boards.records', \App\Http\Controllers\BoardRecordController::class);
     Route::resource('boards.users', \App\Http\Controllers\BoardUserController::class);
     Route::resource('boards.categories', \App\Http\Controllers\BoardCategoryController::class);
-    Route::resource('boards.savingtargets', \App\Http\Controllers\BoardSavingTargetController::class);
+    Route::resource('boards.savingtargets', \App\Http\Controllers\BoardSavingTargetController::class, [
+        'parameters' => ['savingtargets' => 'boardsavingtarget']
+    ]);
 });
 });
+// Authentication Routes...
+
 require __DIR__.'/auth.php';

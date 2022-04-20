@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('type');
             $table->float('value');
             $table->string('attachment')->nullable();
+            $table->boolean('hidden')->default(false);
+            $table->unsignedBigInteger('savingtarget_id')->nullable();
             $table->timestamps();
         });
     }

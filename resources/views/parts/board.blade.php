@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <title>Centaro - @yield('title')</title>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/extra.css') }}" rel="stylesheet">
     <!-- begin of metadata -->
@@ -12,9 +14,11 @@
     <meta name="theme-color" content="#05A8AA">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <!-- end of metadata -->
+
 </head>
 <body class="font-outfit">
-<section class="min-h-screen bg-zinc-800" x-data="{ sideBar: false }">
+<script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+<section class="min-h-screen bg-zinc-800" x-data="{ sideBar: true }">
     <nav class="fixed top-0 left-0 z-20 h-full pb-10 overflow-x-hidden overflow-y-auto transition origin-left transform bg-zinc-900 w-60 md:translate-x-0" :class="{ '-translate-x-full' : !sideBar, 'translate-x-0' : sideBar }" @click.away="sideBar = false">
        <a href="/dashboard" class="flex items-center justify-center px-4 py-3 text-3xl text-center break-all text-emerald-600">Centaro</a>
        <nav class="text-sm font-medium text-gray-400" aria-label="Main Navigation">
@@ -28,6 +32,12 @@
           <svg class="w-6 h-6"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="12" r="9" />  <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1 -1.8 -1" />  <path d="M12 6v2m0 8v2" /></svg>
             <span class="ml-2">Transactions</span>
           </a>
+           <a class="flex items-center px-4 py-2 m-2 transition rounded-md cursor-pointer group hover:bg-emerald-700 hover:text-gray-200" href="/dashboard/boards/{{$board->id}}/savingtargets">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+               </svg>
+               <span class="ml-2">Savingtargets</span>
+           </a>
           <a class="flex items-center px-4 py-2 m-2 transition rounded-md cursor-pointer group hover:bg-emerald-700 hover:text-gray-200" href="/dashboard/boards/{{$board->id}}/users">
             <svg class="w-6 h-6"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />  <circle cx="9" cy="7" r="4" />  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />  <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
              <span class="ml-2">Users</span>
