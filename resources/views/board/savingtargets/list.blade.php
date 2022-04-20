@@ -17,8 +17,9 @@
             <p>Total savingtargets finished: {{count($board->savingtargets->where('status', '=', 'finished'))}}</p>
         </div>
     </div>
+    <div class="w-full my-2 rounded-md p-2 flex bg-zinc-900 justify-center text-white text-2xl">Active Savingtargets:</div>
     <div class="flex flex-wrap flex-row justify-center">
-        @forelse($board->savingtargets->sortByDesc('created_at') as $savingtarget)
+        @forelse($board->savingtargets->sortByDesc('created_at')->where('status', '=', 'active') as $savingtarget)
             <div
                 class="w-1/4 flex-wrap m-3 p-4 text-white bg-zinc-900 border-l-4 border-emerald-700 rounded-lg">
                 <div class="flex items-center">
@@ -110,8 +111,8 @@
                         </div>
                         <div class="text-sm text-emerald-500">Goal: €{{$savingtarget->value}}</div>
                         <div class="text-sm text-red-500 flex flex-row">To
-                            go: @if($savingtarget->value > ($total = $total * ($savingtarget->type_attributes['percentage'] / 100)))
-                                €{{$savingtarget->value - $total}}
+                            go: @if($savingtarget->value > $savingtarget->total)
+                                €{{$savingtarget->value - $savingtarget->total}}
                             @else€0
                             @endif </div>
                         @if($savingtarget->type == 'auto')
@@ -143,11 +144,12 @@
                                 Passed {{$daycount = (new DateTime())->diff(new DateTime($savingtarget->deadline))->days}} @if($daycount > 1 )
                                     days @else day @endif ago!
                             @endif
+
                         </div>
                         <div class="flex flex-row">
                             <div class="relative flex bottom w-full bg-gray-900 rounded-full dark:bg-gray-200">
                                 <div
-                                    style="width: @if($total < $savingtarget->value){{$progress = floor($total / $savingtarget->value * 100)}}@else{{$progress = 100}}@endif%"
+                                    style="width: @if($savingtarget->total <= $savingtarget->value){{$progress = floor($savingtarget->total / $savingtarget->value * 100)}}@else{{$progress = 100}}@endif%"
                                     class="absolute bg-blue-600 text-xs font-medium text-blue-100 text-center p-3 px-0 leading-none rounded-full"
                                 >
                                 </div>
