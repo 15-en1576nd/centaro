@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\BoardController;
 use App\Http\Requests\StoreBoardUserRequest;
 use App\Models\Board;
-use App\Models\BoardUser;
+use App\Models\BoardUserRole;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -107,7 +107,7 @@ class BoardUserController extends Controller
 
 
 
-        $role = BoardUser::find($user->id)->role->first()->name; //Get role name of user
+        $role = $board->users->find($user)->role->first; //Get role name of user
 
 
         if (Auth::user()->id != $user->id && $role != 'admin') { //Check if user doesnt delete it self
