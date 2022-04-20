@@ -94,6 +94,7 @@ class BoardRecordController extends Controller
      */
     public function destroy(BoardRecord $boardRecord)
     {
-        //
+        $record->delete();
+        return redirect()->back();
     }
 }
