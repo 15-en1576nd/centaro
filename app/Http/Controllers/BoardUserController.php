@@ -5,6 +5,7 @@ use App\Http\Controllers\BoardController;
 use App\Http\Requests\StoreBoardUserRequest;
 use App\Models\Board;
 use App\Models\BoardUserRole;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class BoardUserController extends Controller
     public function index(Board $board)
     {
 
-        return view('board.users.list', ['board' => $board]);
+        return view('board.users.list', ['board' => $board, 'roles' => Role::all()]);
     }
 
     /**
