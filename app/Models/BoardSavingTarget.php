@@ -33,5 +33,8 @@ class BoardSavingTarget extends Model
     public function icon() {
         return $this->belongsTo(Icon::class, 'icon_id');
     }
+    public function records() {
+        return $this->hasMany(BoardRecord::class, 'savingtarget_id');
+    }
 
 }
