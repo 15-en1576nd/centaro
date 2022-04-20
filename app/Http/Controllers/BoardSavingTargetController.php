@@ -19,12 +19,37 @@ class BoardSavingTargetController extends Controller
     public function index(Board $board)
     {
         $colors = color::all();
-        $total = 0;
-        foreach ($board->records as $record) { //Get total board value
-            if ($record->type === '+') {
-                $total += $record->value;
-            } elseif ($record->type === '-') {
-                $total -= $record->value;
+        foreach ($board->savingtargets as $boardsavingtarget) { //Get total foreach savingtarget
+            $boardsavingtarget->total = 0;
+            if ($boardsavingtarget->type == 'auto' && $boardsavingtarget->type_attributes['categories'] != null) {
+                foreach ($boardsavingtarget->type_attributes['categories'] as $category) {
+                    $category = BoardCategory::findorfail($category);
+
+                    foreach ($category->records as $record) {
+                        if ($record->type == '+') {
+                            $boardsavingtarget->total += $record->value;
+                        } else {
+                            $boardsavingtarget->total -= $record->value;
+                        }
+                    }
+                    $boardsavingtarget->total = $boardsavingtarget->total * ($boardsavingtarget->type_attributes['percentage'] / 100);
+                }
+            } elseif($boardsavingtarget->type == 'manual') {
+                foreach ($boardsavingtarget->records as $record) {
+                    if ($record->type == '+') {
+                        $boardsavingtarget->total += $record->value;
+                    } else {
+                        $boardsavingtarget->total -= $record->value;
+                    }
+                }
+            } else {
+                foreach ($board->records as $record) {
+                    if ($record->type == '+') {
+                        $boardsavingtarget->total += $record->value;
+                    } else {
+                        $boardsavingtarget->total -= $record->value;
+                    }
+                }
             }
         }
 
