@@ -154,11 +154,18 @@
                                 <div class="z-10 relative w-full outline-none text-center">{{$progress}}%</div>
                             </div>
                             @if($progress == 100)
+                                <form method="post" action="{{route('boards.savingtargets.update', ['board' => $board, 'boardsavingtarget' => $savingtarget->id])}}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" name="status" value="inactive" class="bg-transparent ">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      class="ml-1 h-6 w-6 rounded-md hover:bg-emerald-600 cursor-pointer" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+
                                 </svg>
+                                    </button>
+                                </form>
                             @endif
                         </div>
                     </div>
@@ -167,12 +174,91 @@
 
             </div>
         @empty
-            <div
-                class="flex justify-center w-full align-center">
-                <p>No savingtargets found!</p>
-
-            </div>
+            <div class="text-gray-400 text-center">No active savingtargets found!</div>
         @endforelse
     </div>
+    @if($board->savingtargets->where('status', '=', 'inactive')->count() !== 0)
+    <div class="w-full mt-20 rounded-md p-2 flex bg-zinc-900 justify-center flex-col">
+        <div class="rounded-md w-full flex mt-2 text-white pb-5 text-2xl justify-center">Inactive Savingtargets:</div>
+            @forelse($board->savingtargets->where('status', '=', 'inactive') as $savingtarget)
+                <div class="px-10 flex flex-row justify-between py-3 bg-zinc-700 text-gray-400 text-base">
+                    <div>{{$savingtarget->name}}</div>
+                    <div>Target: {{$savingtarget->value}}€</div>
+                    <div>Last changed: {{$savingtarget->updated_at->format('d/m/Y')}}</div>
+                    <div>Created at: {{$savingtarget->created_at->format('d/m/Y')}}</div>
+                   <div class="flex space-x-3">
+                    <a class="cursor-pointer" data-modal-toggle="popup-modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-red-600"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </a>
+                    <div id="popup-modal" tabindex="-1"
+                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <!-- Modal header -->
+                                <div class="flex justify-end p-2">
+                                    <button type="button"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                            data-modal-toggle="popup-modal">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                  clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="p-6 pt-0 text-center">
+                                    <svg class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              stroke-width="2"
+                                              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Do
+                                        you want to delete this savingtarget?</h3>
+                                    <div class="justify-center flex flex-row">
+                                        <form method="post"
+                                              action="{{ route('boards.savingtargets.destroy', ['board' => $board, 'boardsavingtarget' => $savingtarget]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" data-modal-toggle="popup-modal"
+                                                    type="button"
+                                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                Yes, I'm sure
+                                            </button>
+                                        </form>
+                                        <button data-modal-toggle="popup-modal" type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                            No, cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                       <form method="post" action="{{route('boards.savingtargets.update', ['board' => $board, 'boardsavingtarget' => $savingtarget->id])}}">
+                           @csrf
+                           @method('PATCH')
+                           <button type="submit" name="status" value="active" class="bg-transparent ">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-blue-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                               </svg>
+                           </button>
+                       </form>
+                </div>
+    </div>
+            @empty
+<div class="text-gray-400 text-center">No inactive savingtargets found!</div>
+            @endforelse
+    </div>
+    @endif
     <script src="//unpkg.com/alpinejs" defer></script>
 @endsection
