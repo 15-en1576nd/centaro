@@ -49,9 +49,9 @@ class BoardRecordController extends Controller
        }
        $hidden = $request->hidden;
        if (!$hidden) {
-               $hidden = true;
-           } else {
                $hidden = false;
+           } else {
+               $hidden = true;
            }
            if (!$title) {
                $title = 'savingtarget' . $request->savingtarget_id;
@@ -94,7 +94,9 @@ class BoardRecordController extends Controller
      */
     public function update(UpdateBoardRecordRequest $request, Board $board, BoardRecord $record)
     {
-        //
+        $record->update($request->all());
+
+        return redirect()->back();
     }
 
     /**
