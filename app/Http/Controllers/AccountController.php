@@ -11,9 +11,6 @@ class AccountController extends Controller
 {
 
     public function view() {
-
-
-
-        return view('dashboard', ['']);
+        return view('account', ['']);
     }
 }

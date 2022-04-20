@@ -20,6 +20,7 @@ Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'vi
 Route::get('/account/view', [\App\Http\Controllers\AccountController::class, 'view'])->middleware(['auth'])->name('dashboard');
 
 Route::group(['prefix' => 'dashboard'], function () {
+    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'view'])->middleware(['auth'])->name('dashboard');
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
     Route::resource('boards.records', \App\Http\Controllers\BoardRecordController::class);
     Route::resource('boards.users', \App\Http\Controllers\BoardUserController::class);
