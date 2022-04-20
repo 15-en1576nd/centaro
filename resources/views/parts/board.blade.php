@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <title>Centaro - @yield('title')</title>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/extra.css') }}" rel="stylesheet">
     <!-- begin of metadata -->
@@ -11,9 +13,11 @@
     <meta property="og:description" content="Centaro is a smallsize accountancy website.">
     <meta name="theme-color" content="#05A8AA">
     <!-- end of metadata -->
+
 </head>
 <body class="font-outfit">
-<section class="min-h-screen bg-zinc-800" x-data="{ sideBar: false }">
+<script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+<section class="min-h-screen bg-zinc-800" x-data="{ sideBar: true }">
     <nav class="fixed top-0 left-0 z-20 h-full pb-10 overflow-x-hidden overflow-y-auto transition origin-left transform bg-zinc-900 w-60 md:translate-x-0" :class="{ '-translate-x-full' : !sideBar, 'translate-x-0' : sideBar }" @click.away="sideBar = false">
        <a href="/dashboard" class="flex items-center justify-center px-4 py-3 text-3xl text-center break-all text-emerald-600">Centaro</a>
        <nav class="text-sm font-medium text-gray-400" aria-label="Main Navigation">
