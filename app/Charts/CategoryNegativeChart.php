@@ -37,7 +37,11 @@ class CategoryNegativeChart extends BaseChart
             ///
         }
         foreach ($board->categories as $category) {
-            $percentage[] = floor($category->records->where('type', '=', '-')->sum('value') / $totalrecords * 100);
+            if($totalrecords === 0) {
+                $percentage[] = 0;
+            } else {
+                $percentage[] = floor($category->records->where('type', '=', '-')->sum('value') / $totalrecords * 100);
+            }
         }
         return Chartisan::build()
             ->labels($labels)
