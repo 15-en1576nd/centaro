@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\BoardController;
 use App\Http\Requests\StoreBoardUserRequest;
 use App\Models\Board;
-use App\Models\BoardUser;
+use App\Models\BoardUserRole;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class BoardUserController extends Controller
     public function index(Board $board)
     {
 
-        return view('board.users.list', ['board' => $board]);
+        return view('board.users.list', ['board' => $board, 'roles' => Role::all()]);
     }
 
     /**
@@ -54,7 +55,7 @@ class BoardUserController extends Controller
         $userboard = User::find($id)->boards->find($board->id);
 
         if($userboard === null && $board->type == 'team') { //Check if board type accept multiple users & User not already in board
-            $board->users()->attach('board_id', array('user_id' => $id,'role_id' => 1));
+            $board->users()->attach('board_id', array('user_id' => $id,'role_id' => $request->role));
         } elseif(!$board->id) {
             return redirect('/dashboard/boards');
         }
@@ -107,7 +108,7 @@ class BoardUserController extends Controller
 
 
 
-        $role = BoardUser::find($user->id)->role->first()->name; //Get role name of user
+        $role = $board->users->find($user)->role->first; //Get role name of user
 
 
         if (Auth::user()->id != $user->id && $role != 'admin') { //Check if user doesnt delete it self

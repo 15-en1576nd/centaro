@@ -46,7 +46,7 @@ class BoardController extends Controller
         $board->name = $name;
         $board->type = $type;
         $board->save();
-        $board->users()->attach('board_id', array('user_id' => Auth::user()->id, 'role_id' => 99));
+        $board->users()->attach('board_id', array('user_id' => Auth::user()->id, 'role_id' => 3));
 
         return redirect()->back();
     }
