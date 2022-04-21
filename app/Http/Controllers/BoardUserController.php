@@ -55,7 +55,7 @@ class BoardUserController extends Controller
         $userboard = User::find($id)->boards->find($board->id);
 
         if($userboard === null && $board->type == 'team') { //Check if board type accept multiple users & User not already in board
-            $board->users()->attach('board_id', array('user_id' => $id,'role_id' => 1));
+            $board->users()->attach('board_id', array('user_id' => $id,'role_id' => $request->role));
         } elseif(!$board->id) {
             return redirect('/dashboard/boards');
         }
