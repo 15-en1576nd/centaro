@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <title>Centaro - @yield('title')</title>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/extra.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <!-- begin of metadata -->
+
     <meta property="og:title" content="Centaro">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/">
@@ -13,6 +17,7 @@
     <!-- end of metadata -->
 </head>
 <body class="font-outfit">
+<script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 <section class="min-h-screen bg-zinc-800" x-data="{ sideBar: false }">
     <nav class="fixed top-0 left-0 z-20 h-full pb-10 overflow-x-hidden overflow-y-auto transition origin-left transform bg-zinc-900 w-60 md:translate-x-0" :class="{ '-translate-x-full' : !sideBar, 'translate-x-0' : sideBar }" @click.away="sideBar = false">
        <a href="/" class="flex items-center justify-center text-3xl text-center px-4 py-3 text-emerald-600"> Centaro </a>
