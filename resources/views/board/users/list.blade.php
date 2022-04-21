@@ -52,7 +52,7 @@
 
                     <div class="mt-4">
                         <label class="block text-sm text-gray-200">Role</label>
-                        <select name="category" class="block w-full px-3 py-2 mt-2 text-gray-200 placeholder-gray-400 border border-gray-200 rounded-md bg-zinc-800 focus:border-emerald-400 focus:outline-none focus:ring-0">
+                        <select name="role" class="block w-full px-3 py-2 mt-2 text-gray-200 placeholder-gray-400 border border-gray-200 rounded-md bg-zinc-800 focus:border-emerald-400 focus:outline-none focus:ring-0">
                             @forelse($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
                             @empty
@@ -79,6 +79,15 @@
         <div class="flex flex-col">
             <h1>{{$user->name}} {{$user->surname}}</h1>
             <h1 class="text-gray-500">{{$user->email}}</h1>
+            @if ($user->role->first()->id == 1)
+                <h1 class="text-blue-500 capitalize">Role: {{$user->role->first()->name}}</h1>
+            @elseif ($user->role->first()->id == 2)
+                <h1 class="text-green-500 capitalize">Role: {{$user->role->first()->name}}</h1>
+            @elseif ($user->role->first()->id == 3)
+                <h1 class="text-red-500 capitalize">Role: {{$user->role->first()->name}}</h1>
+            @else
+                <h1 class="text-gray-500 capitalize">Role: {{$user->role->first()->name}}</h1>
+            @endif
         </div>
         <div>
             <form method="post" action="/dashboard/boards/{{$board->id}}/users/{{$user->id}}">
