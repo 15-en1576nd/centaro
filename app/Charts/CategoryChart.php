@@ -37,8 +37,12 @@ class CategoryChart extends BaseChart
             ///
         }
             foreach ($board->categories as $category) {
+                if($totalrecords === 0) {
+                    $percentage[] = 0;
+                } else {
                     $percentage[] = floor($category->records->where('type', '=', '+')->sum('value') / $totalrecords * 100);
-            }
+                }
+                }
         return Chartisan::build()
             ->labels($labels)
             ->dataset('Categories', $percentage);
