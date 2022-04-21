@@ -48,7 +48,7 @@ class BoardController extends Controller
         $board->save();
         $board->users()->attach('board_id', array('user_id' => Auth::user()->id, 'role_id' => 99));
 
-        return redirect('/dashboard/boards/' . $board->id);
+        return redirect()->back();
     }
 
     /**
@@ -96,7 +96,8 @@ class BoardController extends Controller
      */
     public function update(UpdateBoardRequest $request, Board $board)
     {
-        //
+        $board->update($request->all());
+        return redirect()->back();
     }
 
     /**
