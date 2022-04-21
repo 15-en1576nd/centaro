@@ -95,7 +95,7 @@
                             <input type="number" name="value" placeholder="100€" class="m-2 p-2 rounded-md bg-zinc-700">
                             <input type="hidden" name="savingtarget" value="{{$savingtarget->id}}">
                             <div class="flex items-center flex-row text-sm text-gray-400">Automatically add transaction amount to board transactions. <input
-                                    type="checkbox" value="true" name="hidden"></div>
+                                    type="checkbox" value="false" name="hidden"></div>
                             <button type="submit" name="type" value="+" class="h-min bg-green-500 text-white p-2 rounded-md">Add</button>
                             <button type="submit" name="type" value="-" class="h-min bg-red-500 text-white p-2 rounded-md">Remove</button>
                         </form>
