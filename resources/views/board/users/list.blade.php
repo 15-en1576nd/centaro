@@ -52,7 +52,7 @@
 
                     <div class="mt-4">
                         <label class="block text-sm text-gray-200">Role</label>
-                        <select name="role" class="block w-full px-3 py-2 mt-2 text-gray-200 placeholder-gray-400 border border-gray-200 rounded-md bg-zinc-800 focus:border-emerald-400 focus:outline-none focus:ring-0">
+                        <select name="role" class="block w-full px-3 py-2 mt-2 text-gray-200 placeholder-gray-400 capitalize border border-gray-200 rounded-md bg-zinc-800 focus:border-emerald-400 focus:outline-none focus:ring-0">
                             @forelse($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
                             @empty
